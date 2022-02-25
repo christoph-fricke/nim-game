@@ -1,0 +1,22 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+info () {
+  # Print an info message
+  printf "[\033[00;34m INFO \033[0m] $1\n"
+}
+
+okay () {
+  # Print an success message
+  printf "[\033[00;32m OKAY \033[0m] $1\n"
+}
+
+echo ""
+info "Starting pre-push hooks..."
+
+info "Running Prettier and Eslint on staged files..."
+npx lint-staged
+
+echo ""
+okay "All checks successful."
+echo ""

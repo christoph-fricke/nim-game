@@ -1,0 +1,34 @@
+{
+	"name": "nim-game",
+	"version": "1.0.0",
+	"author": "Christoph Fricke <christoph@frickeonline.de>",
+	"description": "An implementation of Nim with XState and React.",
+	"repository": "github:christoph-fricke/nim-game",
+	"source": "src/index.html",
+	"browserslist": "> 0.5%, last 2 versions, not dead",
+	"scripts": {
+		"prepare": "husky install",
+		"start": "rm -rf dist && parcel --https",
+		"build": "rm -rf dist && parcel build",
+		"format": "prettier --write .",
+		"lint": "tsc --noEmit && eslint . && prettier -c .",
+		"test": "echo \"Those who have no code do not have to test code.\""
+	},
+	"lint-staged": {
+		"*": [
+			"prettier --ignore-unknown --write"
+		],
+		"*.{ts,tsx}": [
+			"eslint --fix"
+		]
+	},
+	"devDependencies": {
+		"eslint": "^8.9.0",
+		"eslint-config-react-app": "^7.0.0",
+		"husky": "^7.0.4",
+		"lint-staged": "^12.3.4",
+		"parcel": "^2.3.2",
+		"prettier": "^2.5.1",
+		"typescript": "^4.5.5"
+	}
+}

@@ -1,0 +1,43 @@
+{
+	"compilerOptions": {
+		/* Project */
+		"composite": true,
+		"incremental": true,
+
+		/* Language and Environment */
+		"target": "ES6",
+		"lib": ["DOM", "ES2021"],
+		"jsx": "react-jsx",
+
+		/* Modules */
+		"module": "esnext",
+		"rootDir": ".",
+		"isolatedModules": true,
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+
+		/* Emit */
+		"noEmit": true,
+		"importsNotUsedAsValues": "error",
+
+		/* Interop Constraints */
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"forceConsistentCasingInFileNames": true,
+
+		/* Type Checking */
+		"strict": true,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitOverride": true,
+		"noImplicitReturns": true,
+		"noPropertyAccessFromIndexSignature": true,
+		"noUncheckedIndexedAccess": true,
+		"allowUnreachableCode": false,
+
+		/* Completeness */
+		"skipDefaultLibCheck": true,
+		"skipLibCheck": true,
+		"allowJs": false
+	},
+	"include": ["src", "tests"]
+}
