@@ -12,7 +12,9 @@
 		"build": "rm -rf dist && parcel build",
 		"format": "prettier --write .",
 		"lint": "tsc --noEmit && eslint . && prettier -c .",
-		"test": "echo \"Those who have no code do not have to test code.\""
+		"test": "jest",
+		"test:cov": "jest --coverage",
+		"test:watch": "jest --watch"
 	},
 	"lint-staged": {
 		"*": [
@@ -22,12 +24,23 @@
 			"eslint --fix"
 		]
 	},
+	"dependencies": {
+		"react": "^17.0.2",
+		"react-dom": "^17.0.2"
+	},
 	"devDependencies": {
+		"@swc/jest": "^0.2.20",
+		"@types/jest": "^27.4.1",
+		"@types/react": "^17.0.39",
+		"@types/react-dom": "^17.0.11",
 		"eslint": "^8.9.0",
 		"eslint-config-react-app": "^7.0.0",
 		"husky": "^7.0.4",
+		"jest": "^27.5.1",
 		"lint-staged": "^12.3.4",
 		"parcel": "^2.3.2",
+		"postcss": "^8.4.7",
+		"postcss-modules": "^4.3.1",
 		"prettier": "^2.5.1",
 		"typescript": "^4.5.5"
 	}

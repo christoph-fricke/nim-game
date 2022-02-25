@@ -18,6 +18,7 @@
 
 		/* Emit */
 		"noEmit": true,
+		"sourceMap": true,
 		"importsNotUsedAsValues": "error",
 
 		/* Interop Constraints */
@@ -30,7 +31,7 @@
 		"noFallthroughCasesInSwitch": true,
 		"noImplicitOverride": true,
 		"noImplicitReturns": true,
-		"noPropertyAccessFromIndexSignature": true,
+		"noPropertyAccessFromIndexSignature": false, // Rule is annoying with CSS Modules
 		"noUncheckedIndexedAccess": true,
 		"allowUnreachableCode": false,
 
@@ -39,5 +40,5 @@
 		"skipLibCheck": true,
 		"allowJs": false
 	},
-	"include": ["src", "tests"]
+	"include": ["static.d.ts", "src", "tests"]
 }
