@@ -1,0 +1,8 @@
+{
+	"recommendations": [
+		"clinyong.vscode-css-modules",
+		"esbenp.prettier-vscode",
+		"dbaeumer.vscode-eslint",
+		"statelyai.stately-vscode"
+	]
+}
