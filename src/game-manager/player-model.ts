@@ -8,13 +8,13 @@ import type { MatchState } from "./game-manager-machine.model";
 
 export type PlayerMachine = StateMachine<any, any, PlayerEvent, any>;
 export type PlayerMachineFactory = (config: {
-	secret: string;
-	difficulty: GameDifficulty;
+  secret: string;
+  difficulty: GameDifficulty;
 }) => PlayerMachine;
 
 export type PlayerEvent = EventFrom<typeof requestMove>;
 
 export const requestMove = createEvent(
-	"game.moves.request",
-	(matches: MatchState[]) => ({ matches })
+  "game.moves.request",
+  (matches: MatchState[]) => ({ matches })
 );

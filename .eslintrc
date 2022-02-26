@@ -1,4 +1,4 @@
 {
-	"extends": ["eslint:recommended", "react-app", "react-app/jest"],
-	"ignorePatterns": ["dist"]
+  "extends": ["eslint:recommended", "react-app", "react-app/jest"],
+  "ignorePatterns": ["dist"]
 }

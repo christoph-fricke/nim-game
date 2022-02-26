@@ -1,4 +1,4 @@
 {
-	"useTabs": true,
-	"proseWrap": "always"
+  "useTabs": false,
+  "proseWrap": "always"
 }

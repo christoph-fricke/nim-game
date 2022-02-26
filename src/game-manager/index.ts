@@ -6,7 +6,7 @@ export type { MatchState, GameDifficulty } from "./game-manager-machine.model";
 
 export { requestMove } from "./player-model";
 export type {
-	PlayerEvent,
-	PlayerMachine,
-	PlayerMachineFactory,
+  PlayerEvent,
+  PlayerMachine,
+  PlayerMachineFactory,
 } from "./player-model";

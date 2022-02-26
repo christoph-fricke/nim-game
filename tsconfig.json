@@ -1,44 +1,44 @@
 {
-	"compilerOptions": {
-		/* Project */
-		"composite": true,
-		"incremental": true,
+  "compilerOptions": {
+    /* Project */
+    "composite": true,
+    "incremental": true,
 
-		/* Language and Environment */
-		"target": "ES6",
-		"lib": ["DOM", "ES2021"],
-		"jsx": "react-jsx",
+    /* Language and Environment */
+    "target": "ES6",
+    "lib": ["DOM", "ES2021"],
+    "jsx": "react-jsx",
 
-		/* Modules */
-		"module": "esnext",
-		"rootDir": ".",
-		"isolatedModules": true,
-		"moduleResolution": "node",
-		"resolveJsonModule": true,
+    /* Modules */
+    "module": "esnext",
+    "rootDir": ".",
+    "isolatedModules": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
 
-		/* Emit */
-		"noEmit": true,
-		"sourceMap": true,
-		"importsNotUsedAsValues": "error",
+    /* Emit */
+    "noEmit": true,
+    "sourceMap": true,
+    "importsNotUsedAsValues": "error",
 
-		/* Interop Constraints */
-		"esModuleInterop": true,
-		"allowSyntheticDefaultImports": true,
-		"forceConsistentCasingInFileNames": true,
+    /* Interop Constraints */
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
 
-		/* Type Checking */
-		"strict": true,
-		"noFallthroughCasesInSwitch": true,
-		"noImplicitOverride": true,
-		"noImplicitReturns": true,
-		"noPropertyAccessFromIndexSignature": false, // Rule is annoying with CSS Modules
-		"noUncheckedIndexedAccess": true,
-		"allowUnreachableCode": false,
+    /* Type Checking */
+    "strict": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": false, // Rule is annoying with CSS Modules
+    "noUncheckedIndexedAccess": true,
+    "allowUnreachableCode": false,
 
-		/* Completeness */
-		"skipDefaultLibCheck": true,
-		"skipLibCheck": true,
-		"allowJs": false
-	},
-	"include": ["static.d.ts", "src", "tests"]
+    /* Completeness */
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "allowJs": false
+  },
+  "include": ["static.d.ts", "src", "tests"]
 }
