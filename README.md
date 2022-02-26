@@ -11,7 +11,7 @@ chosen based on the game difficulty. The human actor is responsible for
 processing user input and providing state to the user interface while a user is
 playing.
 
-Each actor can be visualizes in real-time through the Stately inspector while
+Each actor can be visualized in real-time through the Stately inspector while
 the game is open.
 
 ![game architecture](./architecture.png)
