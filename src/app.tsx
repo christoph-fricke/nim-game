@@ -1,21 +1,48 @@
-import { useState } from "react";
+import { useInterpret, useSelector } from "@xstate/react";
 import * as styles from "./app.module.css";
+import { computerFactory } from "./computer-players";
+import { createGameManagerMachine, startGame, stopGame } from "./game-manager";
+import { humanFactory } from "./human-player";
 
 export function App() {
-	const [count, setCount] = useState(0);
+	const gameManager = useInterpret(
+		() =>
+			createGameManagerMachine({
+				goto: () => {}, //TODO: Implement routing
+				createHumanPlayer: humanFactory,
+				createComputerPlayer: computerFactory,
+			}),
+		{
+			devTools: process.env.NODE_ENV === "development",
+		}
+	);
 
-	const inc = () => setCount((c) => c + 1);
-	const dec = () => setCount((c) => c - 1);
+	const isMainMenu = useSelector(gameManager, (state) =>
+		state.hasTag("main_menu")
+	);
+
+	if (isMainMenu) {
+		return (
+			<>
+				<h1 className={styles.heading}>Nim Game</h1>
+				<button
+					className={styles.button}
+					onClick={() => gameManager.send(startGame())}
+				>
+					Start Game
+				</button>
+			</>
+		);
+	}
 
 	return (
 		<>
-			<h1 className={styles.heading}>Hello from React</h1>
-			<p>Current Count: {count}</p>
-			<button className={styles.button} onClick={inc}>
-				Increment
-			</button>
-			<button className={styles.button} onClick={dec}>
-				Decrement
+			<h1 className={styles.heading}>Playing</h1>
+			<button
+				className={styles.button}
+				onClick={() => gameManager.send(stopGame())}
+			>
+				Stop Game
 			</button>
 		</>
 	);

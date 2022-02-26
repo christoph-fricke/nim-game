@@ -4,6 +4,6 @@ body {
 }
 
 #root {
-	background-color: aqua;
 	padding: 24px;
+  text-align: center;
 }
