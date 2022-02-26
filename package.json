@@ -1,47 +1,51 @@
 {
-	"name": "nim-game",
-	"version": "1.0.0",
-	"author": "Christoph Fricke <christoph@frickeonline.de>",
-	"description": "An implementation of Nim with XState and React.",
-	"repository": "github:christoph-fricke/nim-game",
-	"source": "src/index.html",
-	"browserslist": "> 0.5%, last 2 versions, not dead",
-	"scripts": {
-		"prepare": "husky install",
-		"start": "rm -rf dist && parcel --https",
-		"build": "rm -rf dist && parcel build",
-		"format": "prettier --write .",
-		"lint": "tsc --noEmit && eslint . && prettier -c .",
-		"test": "jest",
-		"test:cov": "jest --coverage",
-		"test:watch": "jest --watch"
-	},
-	"lint-staged": {
-		"*": [
-			"prettier --ignore-unknown --write"
-		],
-		"*.{ts,tsx}": [
-			"eslint --fix"
-		]
-	},
-	"dependencies": {
-		"react": "^17.0.2",
-		"react-dom": "^17.0.2"
-	},
-	"devDependencies": {
-		"@swc/jest": "^0.2.20",
-		"@types/jest": "^27.4.1",
-		"@types/react": "^17.0.39",
-		"@types/react-dom": "^17.0.11",
-		"eslint": "^8.9.0",
-		"eslint-config-react-app": "^7.0.0",
-		"husky": "^7.0.4",
-		"jest": "^27.5.1",
-		"lint-staged": "^12.3.4",
-		"parcel": "^2.3.2",
-		"postcss": "^8.4.7",
-		"postcss-modules": "^4.3.1",
-		"prettier": "^2.5.1",
-		"typescript": "^4.5.5"
-	}
+  "name": "nim-game",
+  "version": "1.0.0",
+  "author": "Christoph Fricke <christoph@frickeonline.de>",
+  "description": "An implementation of Nim with XState and React.",
+  "repository": "github:christoph-fricke/nim-game",
+  "source": "src/index.html",
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "scripts": {
+    "prepare": "husky install",
+    "start": "rm -rf dist && parcel --https",
+    "build": "rm -rf dist && parcel build",
+    "format": "prettier --write .",
+    "lint": "tsc --noEmit && eslint . && prettier -c .",
+    "test": "jest",
+    "test:cov": "jest --coverage",
+    "test:watch": "jest --watch"
+  },
+  "lint-staged": {
+    "*": [
+      "prettier --ignore-unknown --write"
+    ],
+    "*.{ts,tsx}": [
+      "eslint --fix"
+    ]
+  },
+  "dependencies": {
+    "@xstate/inspect": "^0.6.2",
+    "@xstate/react": "^2.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "xstate": "^4.30.2",
+    "xsystem": "^0.4.0"
+  },
+  "devDependencies": {
+    "@swc/jest": "^0.2.20",
+    "@types/jest": "^27.4.1",
+    "@types/react": "^17.0.39",
+    "@types/react-dom": "^17.0.11",
+    "eslint": "^8.9.0",
+    "eslint-config-react-app": "^7.0.0",
+    "husky": "^7.0.4",
+    "jest": "^27.5.1",
+    "lint-staged": "^12.3.4",
+    "parcel": "^2.3.2",
+    "postcss": "^8.4.7",
+    "postcss-modules": "^4.3.1",
+    "prettier": "^2.5.1",
+    "typescript": "^4.5.5"
+  }
 }
