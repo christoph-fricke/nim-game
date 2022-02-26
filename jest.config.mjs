@@ -1,6 +1,6 @@
 const config = {
 	roots: ["src"],
-	testEnvironment: "jsdom",
+	testEnvironment: "node",
 	collectCoverageFrom: ["src/**", "!**/mod.ts", "!src/main.ts"],
 	transform: {
 		"^.+\\.(t|j)sx?$": ["@swc/jest"],
