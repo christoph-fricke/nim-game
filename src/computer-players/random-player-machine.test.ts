@@ -72,7 +72,7 @@ describe("Random Player Actor", () => {
       parent,
     }).start();
 
-    let pile = createPile();
+    const pile = createPile();
 
     // Should reply with 3 positions
     deps.getRandomTake.mockReturnValue(3);
@@ -126,7 +126,7 @@ describe("Random Player Actor", () => {
       parent,
     }).start();
 
-    const pile = createPile();
+    let pile = createPile();
     pile[0] = "player1";
 
     deps.getRandomTake.mockReturnValue(2);

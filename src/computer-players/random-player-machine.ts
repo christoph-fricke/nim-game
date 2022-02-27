@@ -1,11 +1,18 @@
 import { assign, createMachine, sendParent, t } from "xstate";
 import { PlayerEvent, playMove } from "../game-manager";
-import type { Pile, Move, AllowedMoveLength } from "../nim";
+import type { Move, AllowedMoveLength, Position } from "../nim";
 import { getFreePositions, createPile, createMove } from "../nim";
 
 interface RandomPlayerContext {
-  pile: Pile;
+  freePos: Position[];
   nextMove: Move;
+}
+
+function getInitialContext(): RandomPlayerContext {
+  return {
+    freePos: getFreePositions(createPile()),
+    nextMove: createMove([0]),
+  };
 }
 
 export interface RandomPlayerDependencies {
@@ -24,10 +31,7 @@ export function createRandomPlayerMachine(deps: RandomPlayerDependencies) {
       },
       id: "RandomPlayer",
       initial: "Idle",
-      context: {
-        pile: createPile(),
-        nextMove: createMove([0]),
-      },
+      context: getInitialContext(),
       states: {
         Idle: {
           on: {
@@ -54,13 +58,12 @@ export function createRandomPlayerMachine(deps: RandomPlayerDependencies) {
     {
       actions: {
         saveGameState: assign((_, e) => ({
-          pile: e.pile,
+          freePos: getFreePositions(e.pile),
         })),
         calculateMove: assign({
           nextMove: (c) => {
-            const free = getFreePositions(c.pile);
             const take = deps.getRandomTake();
-            return createMove(free.slice(0, take));
+            return createMove(c.freePos.slice(0, take));
           },
         }),
         respondWithMove: sendParent((c) => playMove(deps.secret, c.nextMove)),
