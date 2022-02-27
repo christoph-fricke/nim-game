@@ -1,5 +1,6 @@
 import type { PlayerMachineFactory, PlayerMachine } from "../game-manager";
 import { createRandomPlayerMachine } from "./random-player-machine";
+import { getRandomTake } from "./randomness";
 import { createSmartPlayerMachine } from "./smart-player-machine";
 
 export const computerFactory: PlayerMachineFactory = (config) => {
@@ -9,7 +10,10 @@ export const computerFactory: PlayerMachineFactory = (config) => {
   // Therefore, the return types are casted to be compatible.
   switch (config.difficulty) {
     case "medium":
-      return createRandomPlayerMachine(config) as unknown as PlayerMachine;
+      return createRandomPlayerMachine({
+        secret: config.secret,
+        getRandomTake,
+      }) as unknown as PlayerMachine;
     case "extreme":
       return createSmartPlayerMachine(config) as unknown as PlayerMachine;
     default:

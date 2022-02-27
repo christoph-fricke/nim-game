@@ -1,7 +1,7 @@
 import type { StateMachine } from "xstate";
 import { createEvent, EventFrom } from "xsystem";
 import type { GameDifficulty } from ".";
-import type { MatchState } from "./game-manager-machine.model";
+import type { Pile } from "../nim";
 
 // Basic events and factories that players must provide to successfully
 // communicate with the game-manager.
@@ -12,9 +12,14 @@ export type PlayerMachineFactory = (config: {
   difficulty: GameDifficulty;
 }) => PlayerMachine;
 
-export type PlayerEvent = EventFrom<typeof requestMove>;
+export type PlayerEvent =
+  | EventFrom<typeof requestMove>
+  | EventFrom<typeof declineMove>
+  | EventFrom<typeof acceptMove>;
 
-export const requestMove = createEvent(
-  "game.moves.request",
-  (matches: MatchState[]) => ({ matches })
-);
+export const requestMove = createEvent("game.moves.request", (pile: Pile) => ({
+  pile,
+}));
+
+export const declineMove = createEvent("game.moves.decline");
+export const acceptMove = createEvent("game.moves.accept");
