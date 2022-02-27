@@ -9,6 +9,7 @@
   "scripts": {
     "prepare": "husky install",
     "start": "rm -rf dist && parcel --https",
+    "start:tsc": "tsc --watch",
     "build": "rm -rf dist && parcel build",
     "format": "prettier --write .",
     "lint": "tsc --noEmit && eslint . && prettier -c .",
