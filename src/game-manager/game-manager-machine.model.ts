@@ -1,11 +1,16 @@
 import { createEvent, EventFrom } from "xsystem";
+import { createPile, Move, Pile } from "../nim";
+import type { PlayerActor } from "./player-model";
 
 export type GameDifficulty = "medium" | "extreme";
-export type MatchState = "none" | "human" | "computer";
 
 export interface GameMangerContext {
-  matches: MatchState[];
+  pile: Pile;
   difficulty: GameDifficulty;
+  players: {
+    human: PlayerActor;
+    computer: PlayerActor;
+  };
   secrets: {
     human: "you_are_human";
     computer: "you_are_computer";
@@ -15,7 +20,11 @@ export interface GameMangerContext {
 export function getInitialContext(): GameMangerContext {
   return {
     difficulty: "medium",
-    matches: new Array<MatchState>(13).fill("none"),
+    pile: createPile(),
+    players: {
+      human: {} as PlayerActor,
+      computer: {} as PlayerActor,
+    },
     secrets: {
       human: "you_are_human",
       computer: "you_are_computer",
@@ -39,12 +48,8 @@ export const changeDifficulty = createEvent(
 
 export const playMove = createEvent(
   "games.moves.play",
-  /**
-   * @param take The indices of matches a player wants to take in the
-   * previously provided `matches` array.
-   */
-  (secret: string, take: number[]) => ({
+  (secret: string, move: Move) => ({
     secret,
-    take,
+    move,
   })
 );

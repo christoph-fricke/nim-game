@@ -2,15 +2,14 @@ import { useInterpret, useSelector } from "@xstate/react";
 import * as styles from "./app.module.css";
 import { computerFactory } from "./computer-players";
 import { createGameManagerMachine, startGame, stopGame } from "./game-manager";
-import { humanFactory } from "./human-player";
+// import { humanFactory } from "./human-player";
 
 export function App() {
   const gameManager = useInterpret(
     () =>
       createGameManagerMachine({
-        goto: () => {}, //TODO: Implement routing
-        createHumanPlayer: humanFactory,
-        createComputerPlayer: computerFactory,
+        spawnHumanPlayer: computerFactory,
+        spawnComputerPlayer: computerFactory,
       }),
     {
       devTools: process.env.NODE_ENV === "development",

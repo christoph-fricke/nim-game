@@ -3,63 +3,48 @@
 export interface Typegen0 {
   "@@xstate/typegen": true;
   eventsCausingActions: {
-    showMainMenu: "game.stop";
-    showPlaying: "game.start";
-    showGameEnd:
-      | "done.state.GameManager.Playing.ComputerMove"
-      | "done.state.GameManager.Playing.HumanMove";
+    setDifficulty: "game.change_difficulty";
+    applyHumanMoveToPile: "games.moves.play";
+    acceptHumanMove: "games.moves.play";
+    declineHumanMove: "games.moves.play";
+    applyComputerMoveToPile: "games.moves.play";
+    acceptComputerMove: "games.moves.play";
+    declineComputerMove: "games.moves.play";
+    stopPlayers: "xstate.init";
+    resetGame: "game.start";
+    spawnPlayers: "game.start";
+    requestHumanMove: "done.state.GameManager.Playing.ComputerMove";
+    requestComputerMove: "done.state.GameManager.Playing.HumanMove";
   };
   internalEvents: {
     "xstate.init": { type: "xstate.init" };
-    "done.invoke.humanPlayer": {
-      type: "done.invoke.humanPlayer";
-      data: unknown;
-      __tip: "See the XState TS docs to learn how to strongly type this.";
-    };
-    "error.platform.humanPlayer": {
-      type: "error.platform.humanPlayer";
-      data: unknown;
-    };
-    "done.invoke.computerPlayer": {
-      type: "done.invoke.computerPlayer";
-      data: unknown;
-      __tip: "See the XState TS docs to learn how to strongly type this.";
-    };
-    "error.platform.computerPlayer": {
-      type: "error.platform.computerPlayer";
-      data: unknown;
-    };
   };
-  invokeSrcNameMap: {
-    humanPlayer: "done.invoke.humanPlayer";
-    computerPlayer: "done.invoke.computerPlayer";
-  };
+  invokeSrcNameMap: {};
   missingImplementations: {
     actions: never;
     services: never;
     guards: never;
     delays: never;
   };
-  eventsCausingServices: {
-    humanPlayer: "game.start";
-    computerPlayer: "game.start";
-  };
+  eventsCausingServices: {};
   eventsCausingGuards: {
     matchesRemaining:
       | "done.state.GameManager.Playing.HumanMove"
       | "done.state.GameManager.Playing.ComputerMove";
+    validMoveFromHuman: "games.moves.play";
+    moveFromHuman: "games.moves.play";
+    validMoveFromComputer: "games.moves.play";
+    moveFromComputer: "games.moves.play";
   };
   eventsCausingDelays: {};
   matchesStates:
     | "MainMenu"
     | "Playing"
     | "Playing.HumanMove"
-    | "Playing.HumanMove.RequestingMove"
-    | "Playing.HumanMove.AwaitingResponse"
+    | "Playing.HumanMove.AwaitingMove"
     | "Playing.HumanMove.FinishingMove"
     | "Playing.ComputerMove"
-    | "Playing.ComputerMove.RequestingMove"
-    | "Playing.ComputerMove.AwaitingResponse"
+    | "Playing.ComputerMove.AwaitingMove"
     | "Playing.ComputerMove.FinishingMove"
     | "HumanWon"
     | "HumanLost"
@@ -68,15 +53,16 @@ export interface Typegen0 {
           | "HumanMove"
           | "ComputerMove"
           | {
-              HumanMove?:
-                | "RequestingMove"
-                | "AwaitingResponse"
-                | "FinishingMove";
-              ComputerMove?:
-                | "RequestingMove"
-                | "AwaitingResponse"
-                | "FinishingMove";
+              HumanMove?: "AwaitingMove" | "FinishingMove";
+              ComputerMove?: "AwaitingMove" | "FinishingMove";
             };
       };
-  tags: "main_menu" | "playing" | "game_end";
+  tags:
+    | "main_menu"
+    | "playing"
+    | "human_move"
+    | "computer_move"
+    | "game_end"
+    | "human_won"
+    | "human_lost";
 }
