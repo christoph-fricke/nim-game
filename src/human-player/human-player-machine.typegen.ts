@@ -2,7 +2,13 @@
 
 export interface Typegen0 {
   "@@xstate/typegen": true;
-  eventsCausingActions: {};
+  eventsCausingActions: {
+    proxyGameStop: "human.stop_game";
+    saveGameState: "game.moves.request" | "game.moves.accept";
+    updateMove: "human.toggle_match";
+    clearMove: "game.moves.request" | "game.moves.decline";
+    respondWithMove: "human.submit";
+  };
   internalEvents: {
     "xstate.init": { type: "xstate.init" };
   };
@@ -14,8 +20,18 @@ export interface Typegen0 {
     delays: never;
   };
   eventsCausingServices: {};
-  eventsCausingGuards: {};
+  eventsCausingGuards: {
+    validPositionAndMoveNotFull: "human.toggle_match";
+    willEmptyMove: "human.toggle_match";
+  };
   eventsCausingDelays: {};
-  matchesStates: undefined;
+  matchesStates:
+    | "AwaitingRequest"
+    | "Playing"
+    | "Playing.NonSelected"
+    | "Playing.MoveSelected"
+    | "Playing.Submit"
+    | "AwaitingResponse"
+    | { Playing?: "NonSelected" | "MoveSelected" | "Submit" };
   tags: never;
 }

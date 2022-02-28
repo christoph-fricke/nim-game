@@ -1,18 +1,23 @@
-import { ActorRefFrom, createMachine, t } from "xstate";
+import { ActorRefFrom, assign, createMachine, send, t } from "xstate";
+import { pure } from "xstate/lib/actions";
+import { applyMove, createPile, isEmpty, validateMove } from "../nim";
 import {
   GameManagerEvent,
   GameMangerContext,
   getInitialContext,
 } from "./game-manager-machine.model";
-import type { PlayerMachineFactory } from "./player-model";
+import {
+  PlayerFactory,
+  requestMove,
+  acceptMove,
+  declineMove,
+} from "./player-model";
 
 export type GameManagerActor = ActorRefFrom<typeof createGameManagerMachine>;
 
 export interface GameManagerDependencies {
-  /** Navigates the browser to a given `screen` by changing the URL. */
-  goto(screen: "main_menu" | "playing" | "game_end"): void;
-  createHumanPlayer: PlayerMachineFactory;
-  createComputerPlayer: PlayerMachineFactory;
+  spawnHumanPlayer: PlayerFactory;
+  spawnComputerPlayer: PlayerFactory;
 }
 
 export function createGameManagerMachine(deps: GameManagerDependencies) {
@@ -29,87 +34,154 @@ export function createGameManagerMachine(deps: GameManagerDependencies) {
       states: {
         MainMenu: {
           tags: "main_menu",
-          entry: "showMainMenu",
           on: {
             "game.start": "Playing",
+            "game.change_difficulty": {
+              internal: true,
+              actions: "setDifficulty",
+            },
           },
         },
         Playing: {
           tags: "playing",
-          entry: "showPlaying",
+          entry: ["resetGame", "spawnPlayers"],
+          exit: "stopPlayers",
           initial: "HumanMove",
-          invoke: [
-            { id: "humanPlayer", src: "humanPlayer" },
-            { id: "computerPlayer", src: "computerPlayer" },
-          ],
           on: {
             "game.stop": "MainMenu",
           },
           states: {
             HumanMove: {
-              initial: "RequestingMove",
+              tags: "human_move",
+              initial: "AwaitingMove",
+              entry: "requestHumanMove",
               onDone: [
                 { target: "ComputerMove", cond: "matchesRemaining" },
                 { target: "#HumanLost" },
               ],
               states: {
-                RequestingMove: {},
-                AwaitingResponse: {},
+                AwaitingMove: {
+                  on: {
+                    "games.moves.play": [
+                      {
+                        target: "FinishingMove",
+                        cond: "validMoveFromHuman",
+                        actions: ["applyHumanMoveToPile", "acceptHumanMove"],
+                      },
+                      {
+                        target: "AwaitingMove",
+                        cond: "moveFromHuman",
+                        actions: "declineHumanMove",
+                      },
+                    ],
+                  },
+                },
                 FinishingMove: { type: "final" },
               },
             },
             ComputerMove: {
-              initial: "RequestingMove",
+              tags: "computer_move",
+              initial: "AwaitingMove",
+              entry: "requestComputerMove",
               onDone: [
                 { target: "HumanMove", cond: "matchesRemaining" },
                 { target: "#HumanWon" },
               ],
               states: {
-                RequestingMove: {},
-                AwaitingResponse: {},
+                AwaitingMove: {
+                  on: {
+                    "games.moves.play": [
+                      {
+                        target: "FinishingMove",
+                        cond: "validMoveFromComputer",
+                        actions: [
+                          "applyComputerMoveToPile",
+                          "acceptComputerMove",
+                        ],
+                      },
+                      {
+                        target: "AwaitingMove",
+                        cond: "moveFromComputer",
+                        actions: "declineComputerMove",
+                      },
+                    ],
+                  },
+                },
                 FinishingMove: { type: "final" },
               },
             },
           },
         },
         HumanWon: {
-          tags: "game_end",
-          entry: "showGameEnd",
+          tags: ["game_end", "human_won"],
           id: "HumanWon",
           on: {
-            "game.start": "Playing",
+            "game.start": "MainMenu",
           },
         },
         HumanLost: {
-          tags: "game_end",
-          entry: "showGameEnd",
+          tags: ["game_end", "human_lost"],
           id: "HumanLost",
           on: {
-            "game.start": "Playing",
+            "game.start": "MainMenu",
           },
         },
       },
     },
     {
       guards: {
-        matchesRemaining: (c) => c.matches.some((m) => m === "none"),
+        matchesRemaining: (c) => !isEmpty(c.pile),
+        moveFromHuman: (c, e) => e.secret === c.secrets.human,
+        validMoveFromHuman: (c, e) =>
+          e.secret === c.secrets.human && validateMove(c.pile, e.move),
+        moveFromComputer: (c, e) => e.secret === c.secrets.computer,
+        validMoveFromComputer: (c, e) =>
+          e.secret === c.secrets.computer && validateMove(c.pile, e.move),
       },
       actions: {
-        showMainMenu: () => deps.goto("main_menu"),
-        showPlaying: () => deps.goto("playing"),
-        showGameEnd: () => deps.goto("game_end"),
-      },
-      services: {
-        humanPlayer: (c) =>
-          deps.createHumanPlayer({
-            secret: c.secrets.human,
-            difficulty: c.difficulty,
+        setDifficulty: assign({ difficulty: (_, e) => e.difficulty }),
+        resetGame: assign({ pile: (c) => createPile() }),
+        spawnPlayers: assign({
+          players: (c) => ({
+            human: deps.spawnHumanPlayer({
+              secret: c.secrets.human,
+              difficulty: c.difficulty,
+            }),
+            computer: deps.spawnComputerPlayer({
+              secret: c.secrets.computer,
+              difficulty: c.difficulty,
+            }),
           }),
-        computerPlayer: (c) =>
-          deps.createComputerPlayer({
-            secret: c.secrets.computer,
-            difficulty: c.difficulty,
-          }),
+        }),
+        stopPlayers: pure((c) => [
+          // The provided stop actions appears to be unable to stop `ActorRef`s... ?
+          { type: "stop", exec: () => c.players.human.stop?.() },
+          { type: "stop", exec: () => c.players.computer.stop?.() },
+        ]),
+        requestHumanMove: send((c) => requestMove(c.pile), {
+          to: (c) => c.players.human,
+        }),
+        acceptHumanMove: send((c) => acceptMove(c.pile), {
+          to: (c) => c.players.human,
+        }),
+        declineHumanMove: send(declineMove(), {
+          to: (c) => c.players.human,
+        }),
+        applyHumanMoveToPile: assign({
+          pile: (c, e) => applyMove(c.pile, e.move, "player1"),
+        }),
+        requestComputerMove: send((c) => requestMove(c.pile), {
+          to: (c) => c.players.computer,
+        }),
+        acceptComputerMove: send((c) => acceptMove(c.pile), {
+          to: (c) => c.players.computer,
+        }),
+        declineComputerMove: send(declineMove(), {
+          to: (c) => c.players.computer,
+        }),
+        applyComputerMoveToPile: assign({
+          pile: (c, e) => applyMove(c.pile, e.move, "player2"),
+        }),
       },
     }
   );

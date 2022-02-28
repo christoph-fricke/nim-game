@@ -9,6 +9,7 @@
   "scripts": {
     "prepare": "husky install",
     "start": "rm -rf dist && parcel --https",
+    "start:tsc": "tsc --watch",
     "build": "rm -rf dist && parcel build",
     "format": "prettier --write .",
     "lint": "tsc --noEmit && eslint . && prettier -c .",
@@ -41,6 +42,7 @@
     "eslint-config-react-app": "^7.0.0",
     "husky": "^7.0.4",
     "jest": "^27.5.1",
+    "jest-mock-extended": "^2.0.4",
     "lint-staged": "^12.3.4",
     "parcel": "^2.3.2",
     "postcss": "^8.4.7",
