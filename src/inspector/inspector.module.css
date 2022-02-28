@@ -19,14 +19,14 @@
 }
 
 .inspectorToggle:focus-visible {
-  background-color: var(--gray4);
-  border: var(--border-default) solid var(--gray7);
+  background-color: var(--violet4);
+  border: var(--border-default) solid var(--violet7);
 }
 
 .inspectorToggle:active {
-  border: var(--border-default) solid var(--gray7);
+  border: var(--border-default) solid var(--violet7);
 }
 
 .inspectorToggle:hover {
-  background-color: var(--gray4);
+  background-color: var(--violet4);
 }
