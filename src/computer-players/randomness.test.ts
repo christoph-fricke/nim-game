@@ -40,4 +40,13 @@ describe("getRandomTake", () => {
     spy.mockReturnValue(0.99999);
     expect(getRandomTake()).toBe(3);
   });
+
+  it("should throw for invalid position counts", () => {
+    // Cant'be returned by Math.random. Should just test the error handling.
+    spy.mockReturnValue(1);
+
+    expect(getRandomTake).toThrowError(
+      "Random take generator did not generate a number between 1 and 3"
+    );
+  });
 });
