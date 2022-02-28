@@ -1,0 +1,32 @@
+.inspectorToggle {
+  box-sizing: border-box;
+  appearance: none;
+  outline: none;
+
+  border: var(--border-default) solid transparent;
+  border-radius: var(--radius-default);
+  background-color: transparent;
+  transition: all var(--transition);
+  cursor: pointer;
+
+  padding: 0.4em 0.8em;
+  position: fixed;
+  right: var(--space24);
+  bottom: var(--space24);
+
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.inspectorToggle:focus-visible {
+  background-color: var(--gray4);
+  border: var(--border-default) solid var(--gray7);
+}
+
+.inspectorToggle:active {
+  border: var(--border-default) solid var(--gray7);
+}
+
+.inspectorToggle:hover {
+  background-color: var(--gray4);
+}

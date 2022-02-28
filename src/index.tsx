@@ -1,13 +1,17 @@
+import { StrictMode } from "react";
 import { render } from "react-dom";
 import { App } from "./app";
+import { InspectorToggle, showInspector } from "./inspector/inspector";
 
 (async function main() {
-  if (process.env.NODE_ENV === "development") {
-    const { inspect } = await import("@xstate/inspect");
-
-    inspect({ iframe: false, url: "https://stately.ai/viz?inspect" });
-  }
+  await showInspector();
 
   const root = document.querySelector("#root");
-  render(<App />, root);
+  render(
+    <StrictMode>
+      <App />
+      <InspectorToggle />
+    </StrictMode>,
+    root
+  );
 })();
