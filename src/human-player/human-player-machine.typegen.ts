@@ -4,7 +4,7 @@ export interface Typegen0 {
   "@@xstate/typegen": true;
   eventsCausingActions: {
     proxyGameStop: "human.stop_game";
-    saveGameState: "game.moves.request";
+    saveGameState: "game.moves.request" | "game.moves.accept";
     updateMove: "human.toggle_match";
     clearMove: "game.moves.request" | "game.moves.decline";
     respondWithMove: "human.submit";

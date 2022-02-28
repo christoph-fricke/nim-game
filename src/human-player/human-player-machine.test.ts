@@ -96,7 +96,7 @@ describe("Human Player Actor", () => {
     const parent = mockDeep<AnyInterpreter>();
     const actor = interpret(createHumanPlayerMachine(deps), { parent }).start();
 
-    const pile = createPile();
+    let pile = createPile();
     pile[0] = "player1";
     pile[1] = "player2";
     actor.send(requestMove(pile));
@@ -109,7 +109,7 @@ describe("Human Player Actor", () => {
     const parent = mockDeep<AnyInterpreter>();
     const actor = interpret(createHumanPlayerMachine(deps), { parent }).start();
 
-    const pile = createPile();
+    let pile = createPile();
     pile[0] = "player1";
     pile[1] = "player2";
     actor.send(requestMove(pile));
@@ -134,16 +134,17 @@ describe("Human Player Actor", () => {
     const parent = mockDeep<AnyInterpreter>();
     const actor = interpret(createHumanPlayerMachine(deps), { parent }).start();
 
-    const pile = createPile();
+    let pile = createPile();
     actor.send(requestMove(pile));
     actor.send(toggleMatch(2));
     actor.send(submitMove());
+    pile[2] = "player1";
 
     expect(actor.state.can(toggleMatch(4))).toBeFalsy();
     expect(actor.state.can(submitMove())).toBeFalsy();
     expect(actor.state.can(requestMove(pile))).toBeFalsy();
 
-    actor.send(acceptMove());
+    actor.send(acceptMove(pile));
 
     expect(actor.state.can(toggleMatch(4))).toBeFalsy();
     expect(actor.state.can(submitMove())).toBeFalsy();
@@ -176,14 +177,15 @@ describe("Human Player Actor", () => {
     const parent = mockDeep<AnyInterpreter>();
     const actor = interpret(createHumanPlayerMachine(deps), { parent }).start();
 
-    const pile = createPile();
+    let pile = createPile();
     actor.send(requestMove(pile));
 
     actor.send(toggleMatch(2));
     expect(actor.state.context.nextMove).toStrictEqual([2]);
 
     actor.send(submitMove());
-    actor.send(acceptMove());
+    pile[2] = "player1";
+    actor.send(acceptMove(pile));
     actor.send(requestMove(pile));
 
     expect(actor.state.context.nextMove).toStrictEqual([]);

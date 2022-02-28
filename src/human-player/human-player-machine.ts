@@ -71,7 +71,10 @@ export function createHumanPlayerMachine(deps: HumanPlayerDependencies) {
         },
         AwaitingResponse: {
           on: {
-            "game.moves.accept": "AwaitingRequest",
+            "game.moves.accept": {
+              target: "AwaitingRequest",
+              actions: "saveGameState",
+            },
             "game.moves.decline": "Playing",
           },
         },

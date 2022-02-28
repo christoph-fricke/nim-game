@@ -72,7 +72,7 @@ export function createSmartPlayerMachine(deps: SmartPlayerDependencies) {
           freePos: getFreePositions(e.pile),
         })),
         updatePrevFree: assign({
-          prevFreeCount: (c) => c.freePos.length - c.nextMove.length,
+          prevFreeCount: (_, e) => getFreePositions(e.pile).length,
         }),
         calculateMove: assign({
           nextMove: (c) => getNextMove(c.freePos, c.prevFreeCount),

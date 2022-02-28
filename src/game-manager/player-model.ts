@@ -27,4 +27,6 @@ export const requestMove = createEvent("game.moves.request", (pile: Pile) => ({
 }));
 
 export const declineMove = createEvent("game.moves.decline");
-export const acceptMove = createEvent("game.moves.accept");
+export const acceptMove = createEvent("game.moves.accept", (pile: Pile) => ({
+  pile,
+}));

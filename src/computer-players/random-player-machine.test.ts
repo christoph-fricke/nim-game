@@ -57,9 +57,7 @@ describe("Random Player Actor", () => {
     }).start();
 
     let pile = createPile();
-    pile[0] = "player1";
-    pile[1] = "player1";
-    pile[3] = "player1";
+    pile[0] = pile[1] = pile[3] = "player1";
 
     actor.send(requestMove(pile));
     clock.increment(2000);
@@ -76,7 +74,7 @@ describe("Random Player Actor", () => {
       parent,
     }).start();
 
-    const pile = createPile();
+    let pile = createPile();
 
     // Should reply with 3 positions
     deps.getRandomTake.mockReturnValue(3);
@@ -88,7 +86,8 @@ describe("Random Player Actor", () => {
 
     parent.send.mockClear();
     deps.getRandomTake.mockClear();
-    actor.send(acceptMove());
+    pile[0] = pile[1] = pile[2] = "player1";
+    actor.send(acceptMove(pile));
 
     // Should reply with 2 positions
     deps.getRandomTake.mockReturnValue(2);
@@ -96,7 +95,7 @@ describe("Random Player Actor", () => {
     clock.increment(2000);
 
     expect(deps.getRandomTake).toBeCalledTimes(1);
-    expect(parent.send).toBeCalledWith(playMove(deps.secret, [0, 1]));
+    expect(parent.send).toBeCalledWith(playMove(deps.secret, [3, 4]));
   });
 
   it("should not process new move requests until the first is accepted", () => {
@@ -107,7 +106,7 @@ describe("Random Player Actor", () => {
       parent,
     }).start();
 
-    const pile = createPile();
+    let pile = createPile();
 
     actor.send(requestMove(pile));
     expect(actor.state.can(requestMove(pile))).toBeFalsy();
@@ -115,7 +114,8 @@ describe("Random Player Actor", () => {
     clock.increment(2000);
     expect(actor.state.can(requestMove(pile))).toBeFalsy();
 
-    actor.send(acceptMove());
+    pile[0] = "player1";
+    actor.send(acceptMove(pile));
     expect(actor.state.can(requestMove(pile))).toBeTruthy();
   });
 

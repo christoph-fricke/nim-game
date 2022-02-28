@@ -4,7 +4,6 @@ import {
   MockProxy,
   mock,
   mockFn,
-  anyArray,
 } from "jest-mock-extended";
 import { interpret } from "xstate";
 import { acceptMove, declineMove, PlayerActor } from "./player-model";
@@ -72,40 +71,45 @@ describe("Game Manager Actor", () => {
 
   it("should let the human start the first move", () => {
     const actor = interpret(createGameManagerMachine(deps)).start();
+    let expectedState = createPile();
 
     actor.send(startGame());
 
     expect(human.send).toBeCalledTimes(1);
-    expect(human.send).toBeCalledWith(requestMove(anyArray() as any));
+    expect(human.send).toBeCalledWith(requestMove(expectedState));
   });
 
   it("should request a computer move after the human", () => {
     const actor = interpret(createGameManagerMachine(deps)).start();
     const secrets = actor.state.context.secrets;
+    let expectedState = createPile();
 
     actor.send(startGame());
     actor.send(playMove(secrets.human, [0]));
+    expectedState[0] = "player1";
 
     expect(computer.send).toBeCalledTimes(1);
-    expect(computer.send).toBeCalledWith(requestMove(anyArray() as any));
+    expect(computer.send).toBeCalledWith(requestMove(expectedState));
   });
 
   it("should ignore moves from players who are not in turn", () => {
     const actor = interpret(createGameManagerMachine(deps)).start();
     const secrets = actor.state.context.secrets;
+    let expectedState = createPile();
 
     actor.send(startGame());
     expect(actor.state.can(playMove(secrets.computer, [0]))).toBeFalsy();
     expect(actor.state.can(playMove(secrets.human, [0]))).toBeTruthy();
 
     actor.send(playMove(secrets.human, [0]));
+    expectedState[0] = "player1";
     expect(actor.state.can(playMove(secrets.computer, [1]))).toBeTruthy();
     expect(actor.state.can(playMove(secrets.human, [1]))).toBeFalsy();
 
     expect(human.send).toBeCalledTimes(2);
-    expect(human.send).lastCalledWith(acceptMove());
+    expect(human.send).lastCalledWith(acceptMove(expectedState));
     expect(computer.send).toBeCalledTimes(1);
-    expect(computer.send).toBeCalledWith(requestMove(anyArray() as any));
+    expect(computer.send).toBeCalledWith(requestMove(expectedState));
   });
 
   it("should decline moves when the match is already taken", () => {
@@ -129,12 +133,14 @@ describe("Game Manager Actor", () => {
   it("should be possible to stop and start a new game during a game", () => {
     const actor = interpret(createGameManagerMachine(deps)).start();
     const secrets = actor.state.context.secrets;
+    let expectedState = createPile();
 
     actor.send(startGame());
     expect(actor.state.hasTag("playing")).toBeTruthy();
 
     actor.send(playMove(secrets.human, [0]));
-    expect(actor.state.context.pile).not.toStrictEqual(createPile());
+    expectedState[0] = "player1";
+    expect(actor.state.context.pile).toStrictEqual(expectedState);
 
     actor.send(stopGame());
     expect(actor.state.hasTag("main_menu")).toBeTruthy();
@@ -149,19 +155,26 @@ describe("Game Manager Actor", () => {
   it("should be possible to start a new game after the human wins", () => {
     const actor = interpret(createGameManagerMachine(deps)).start();
     const secrets = actor.state.context.secrets;
+    let expectedState = createPile();
 
     actor.send(startGame());
     actor.send(playMove(secrets.human, [0, 1, 2]));
     actor.send(playMove(secrets.computer, [12, 11, 10]));
+    expectedState[0] = expectedState[1] = expectedState[2] = "player1";
+    expectedState[12] = expectedState[11] = expectedState[10] = "player2";
 
     actor.send(playMove(secrets.human, [3, 4, 5]));
     actor.send(playMove(secrets.computer, [9, 8]));
+    expectedState[3] = expectedState[4] = expectedState[5] = "player1";
+    expectedState[9] = expectedState[8] = "player2";
 
     actor.send(playMove(secrets.human, [6]));
     actor.send(playMove(secrets.computer, [7]));
 
-    expect(human.send).lastCalledWith(acceptMove());
-    expect(computer.send).lastCalledWith(acceptMove());
+    expectedState[6] = "player1";
+    expect(human.send).lastCalledWith(acceptMove(expectedState));
+    expectedState[7] = "player2";
+    expect(computer.send).lastCalledWith(acceptMove(expectedState));
 
     expect(actor.state.hasTag("game_end")).toBeTruthy();
     expect(actor.state.hasTag("human_won")).toBeTruthy();
@@ -175,18 +188,24 @@ describe("Game Manager Actor", () => {
   it("should be possible to start a new game after the human looses", () => {
     const actor = interpret(createGameManagerMachine(deps)).start();
     const secrets = actor.state.context.secrets;
+    let expectedState = createPile();
 
     actor.send(startGame());
     actor.send(playMove(secrets.human, [0, 1, 2]));
     actor.send(playMove(secrets.computer, [12, 11, 10]));
+    expectedState[0] = expectedState[1] = expectedState[2] = "player1";
+    expectedState[12] = expectedState[11] = expectedState[10] = "player2";
 
     actor.send(playMove(secrets.human, [3, 4, 5]));
     actor.send(playMove(secrets.computer, [9, 8, 7]));
+    expectedState[3] = expectedState[4] = expectedState[5] = "player1";
+    expectedState[9] = expectedState[8] = expectedState[7] = "player2";
 
     actor.send(playMove(secrets.human, [6]));
 
-    expect(human.send).lastCalledWith(acceptMove());
-    expect(computer.send).lastCalledWith(acceptMove());
+    expect(computer.send).lastCalledWith(acceptMove(expectedState));
+    expectedState[6] = "player1";
+    expect(human.send).lastCalledWith(acceptMove(expectedState));
 
     expect(actor.state.hasTag("game_end")).toBeTruthy();
     expect(actor.state.hasTag("human_lost")).toBeTruthy();

@@ -90,29 +90,23 @@ describe("Random Player Actor", () => {
     clock.increment(2000);
     expect(parent.send).toBeCalledWith(playMove(deps.secret, [0, 1, 2]));
 
+    pile[0] = pile[1] = pile[2] = "player2";
     parent.send.mockClear();
-    actor.send(acceptMove());
+    actor.send(acceptMove(pile));
 
     // Its + 2 matches taken
-    pile[0] = "player2";
-    pile[1] = "player2";
-    pile[2] = "player2";
-    pile[11] = "player1";
-    pile[10] = "player1";
+    pile[11] = pile[10] = "player1";
 
     actor.send(requestMove(pile));
     clock.increment(2000);
     expect(parent.send).toBeCalledWith(playMove(deps.secret, [3, 4]));
 
+    pile[3] = pile[4] = "player2";
     parent.send.mockClear();
-    actor.send(acceptMove());
+    actor.send(acceptMove(pile));
 
     // Its + 3 matches taken
-    pile[3] = "player2";
-    pile[4] = "player2";
-    pile[9] = "player1";
-    pile[8] = "player1";
-    pile[7] = "player1";
+    pile[9] = pile[8] = pile[7] = "player1";
 
     actor.send(requestMove(pile));
     clock.increment(2000);
@@ -127,7 +121,7 @@ describe("Random Player Actor", () => {
       parent,
     }).start();
 
-    const pile = buildPile();
+    let pile = buildPile();
 
     actor.send(requestMove(pile));
     expect(actor.state.can(requestMove(pile))).toBeFalsy();
@@ -135,7 +129,7 @@ describe("Random Player Actor", () => {
     clock.increment(2000);
     expect(actor.state.can(requestMove(pile))).toBeFalsy();
 
-    actor.send(acceptMove());
+    actor.send(acceptMove(pile));
     expect(actor.state.can(requestMove(pile))).toBeTruthy();
   });
 
@@ -182,7 +176,8 @@ describe("Random Player Actor", () => {
 
     consoleSpy.mockClear();
     parent.send.mockClear();
-    actor.send(acceptMove());
+    pile[0] = pile[1] = pile[2] = "player2";
+    actor.send(acceptMove(pile));
 
     // Should cause problems if opponent takes more than max sticks as well.
     pile = pile.map(() => "player1") as Pile;

@@ -161,7 +161,7 @@ export function createGameManagerMachine(deps: GameManagerDependencies) {
         requestHumanMove: send((c) => requestMove(c.pile), {
           to: (c) => c.players.human,
         }),
-        acceptHumanMove: send(acceptMove(), {
+        acceptHumanMove: send((c) => acceptMove(c.pile), {
           to: (c) => c.players.human,
         }),
         declineHumanMove: send(declineMove(), {
@@ -173,7 +173,7 @@ export function createGameManagerMachine(deps: GameManagerDependencies) {
         requestComputerMove: send((c) => requestMove(c.pile), {
           to: (c) => c.players.computer,
         }),
-        acceptComputerMove: send(acceptMove(), {
+        acceptComputerMove: send((c) => acceptMove(c.pile), {
           to: (c) => c.players.computer,
         }),
         declineComputerMove: send(declineMove(), {
