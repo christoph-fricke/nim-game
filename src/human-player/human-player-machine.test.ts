@@ -126,8 +126,11 @@ describe("Human Player Actor", () => {
     actor.send(toggleMatch(0));
     expect(actor.state.context.nextMove).toStrictEqual([3]);
 
+    actor.send(toggleMatch(3));
+    expect(actor.state.context.nextMove).toStrictEqual([]);
+
     actor.send(toggleMatch(2));
-    expect(actor.state.context.nextMove).toStrictEqual([3, 2]);
+    expect(actor.state.context.nextMove).toStrictEqual([2]);
   });
 
   it("should ignore further events until a move is accepted", () => {
@@ -188,6 +191,26 @@ describe("Human Player Actor", () => {
     actor.send(acceptMove(pile));
     actor.send(requestMove(pile));
 
+    expect(actor.state.context.nextMove).toStrictEqual([]);
+  });
+
+  it("should update the pile and reset the move after it is accepted for display", () => {
+    const parent = mockDeep<AnyInterpreter>();
+    const actor = interpret(createHumanPlayerMachine(deps), { parent }).start();
+
+    let pile = createPile();
+    actor.send(requestMove(pile));
+    actor.send(toggleMatch(2));
+    actor.send(toggleMatch(3));
+    actor.send(submitMove());
+
+    expect(actor.state.context.pile).toStrictEqual(pile);
+    expect(actor.state.context.nextMove).toStrictEqual([2, 3]);
+
+    pile[2] = pile[3] = "player1";
+    actor.send(acceptMove(pile));
+
+    expect(actor.state.context.pile).toStrictEqual(pile);
     expect(actor.state.context.nextMove).toStrictEqual([]);
   });
 });

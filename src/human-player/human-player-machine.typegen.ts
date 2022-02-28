@@ -6,7 +6,11 @@ export interface Typegen0 {
     proxyGameStop: "human.stop_game";
     saveGameState: "game.moves.request" | "game.moves.accept";
     updateMove: "human.toggle_match";
-    clearMove: "game.moves.request" | "game.moves.decline";
+    clearMove:
+      | "human.toggle_match"
+      | "game.moves.accept"
+      | "game.moves.request"
+      | "game.moves.decline";
     respondWithMove: "human.submit";
   };
   internalEvents: {
@@ -33,5 +37,5 @@ export interface Typegen0 {
     | "Playing.Submit"
     | "AwaitingResponse"
     | { Playing?: "NonSelected" | "MoveSelected" | "Submit" };
-  tags: never;
+  tags: "waiting";
 }

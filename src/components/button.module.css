@@ -1,0 +1,34 @@
+.button {
+  box-sizing: border-box;
+  appearance: none;
+  border: none;
+  outline: none;
+
+  border-radius: var(--radius-default);
+  background-color: var(--violet9);
+  color: var(--violet12);
+  transition: all var(--transition);
+  cursor: pointer;
+
+  padding: 0.4em 0.8em;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.button:disabled {
+  pointer-events: none;
+  background-color: var(--violet5);
+  color: var(--violet11);
+}
+
+.button:hover {
+  background-color: var(--violet8);
+}
+
+.button:focus-visible {
+  background-color: var(--violet8);
+}
+
+.button:active {
+  background-color: var(--violet7);
+}

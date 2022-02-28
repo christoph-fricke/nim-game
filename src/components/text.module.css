@@ -1,0 +1,25 @@
+p.text,
+span.text {
+  color: var(--violet12);
+  font-family: var(--font-default);
+  margin: 0;
+}
+
+h2.text {
+  color: var(--violet12);
+  font-family: var(--font-default);
+  font-size: 2rem;
+  margin: 0;
+}
+
+.text[data-tone="positive"] {
+  color: var(--green9);
+}
+
+.text[data-tone="negative"] {
+  color: var(--red9);
+}
+
+.text[data-size="large"] {
+  font-size: 1.25rem;
+}
