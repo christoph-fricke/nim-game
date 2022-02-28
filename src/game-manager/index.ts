@@ -1,5 +1,9 @@
 export { createGameManagerMachine } from "./game-manager-machine";
-export type { GameManagerDependencies } from "./game-manager-machine";
+export type {
+  GameManagerDependencies,
+  GameManagerActor,
+  GameManagerState,
+} from "./game-manager-machine";
 
 export {
   startGame,

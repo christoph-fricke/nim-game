@@ -1,4 +1,11 @@
-import { ActorRefFrom, assign, createMachine, send, t } from "xstate";
+import {
+  ActorRefFrom,
+  assign,
+  createMachine,
+  send,
+  StateFrom,
+  t,
+} from "xstate";
 import { pure } from "xstate/lib/actions";
 import { applyMove, createPile, isEmpty, validateMove } from "../nim";
 import {
@@ -14,6 +21,7 @@ import {
 } from "./player-model";
 
 export type GameManagerActor = ActorRefFrom<typeof createGameManagerMachine>;
+export type GameManagerState = StateFrom<typeof createGameManagerMachine>;
 
 export interface GameManagerDependencies {
   spawnHumanPlayer: PlayerFactory;
@@ -155,29 +163,29 @@ export function createGameManagerMachine(deps: GameManagerDependencies) {
         }),
         stopPlayers: pure((c) => [
           // The provided stop actions appears to be unable to stop `ActorRef`s... ?
-          { type: "stop", exec: () => c.players.human.stop?.() },
-          { type: "stop", exec: () => c.players.computer.stop?.() },
+          { type: "stop", exec: () => c.players.human?.stop?.() },
+          { type: "stop", exec: () => c.players.computer?.stop?.() },
         ]),
         requestHumanMove: send((c) => requestMove(c.pile), {
-          to: (c) => c.players.human,
+          to: (c) => c.players.human!,
         }),
         acceptHumanMove: send((c) => acceptMove(c.pile), {
-          to: (c) => c.players.human,
+          to: (c) => c.players.human!,
         }),
         declineHumanMove: send(declineMove(), {
-          to: (c) => c.players.human,
+          to: (c) => c.players.human!,
         }),
         applyHumanMoveToPile: assign({
           pile: (c, e) => applyMove(c.pile, e.move, "player1"),
         }),
         requestComputerMove: send((c) => requestMove(c.pile), {
-          to: (c) => c.players.computer,
+          to: (c) => c.players.computer!,
         }),
         acceptComputerMove: send((c) => acceptMove(c.pile), {
-          to: (c) => c.players.computer,
+          to: (c) => c.players.computer!,
         }),
         declineComputerMove: send(declineMove(), {
-          to: (c) => c.players.computer,
+          to: (c) => c.players.computer!,
         }),
         applyComputerMoveToPile: assign({
           pile: (c, e) => applyMove(c.pile, e.move, "player2"),

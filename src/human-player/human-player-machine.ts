@@ -1,4 +1,11 @@
-import { ActorRefFrom, assign, createMachine, sendParent, t } from "xstate";
+import {
+  ActorRefFrom,
+  assign,
+  createMachine,
+  sendParent,
+  StateFrom,
+  t,
+} from "xstate";
 import { PlayerEvent, playMove, stopGame } from "../game-manager";
 import { createMove, getFreePositions, maxAllowed, Move } from "../nim";
 import {
@@ -8,6 +15,7 @@ import {
 } from "./human-player-machine.model";
 
 export type HumanPlayerActor = ActorRefFrom<typeof createHumanPlayerMachine>;
+export type HumanPlayerState = StateFrom<typeof createHumanPlayerMachine>;
 
 export interface HumanPlayerDependencies {
   /** The `secret` is provided by the game manager to verify moves from this actor. */

@@ -8,8 +8,8 @@ export interface GameMangerContext {
   pile: Pile;
   difficulty: GameDifficulty;
   players: {
-    human: PlayerActor;
-    computer: PlayerActor;
+    human: PlayerActor | null;
+    computer: PlayerActor | null;
   };
   secrets: {
     human: "you_are_human";
@@ -22,8 +22,8 @@ export function getInitialContext(): GameMangerContext {
     difficulty: "medium",
     pile: createPile(),
     players: {
-      human: {} as PlayerActor,
-      computer: {} as PlayerActor,
+      human: null,
+      computer: null,
     },
     secrets: {
       human: "you_are_human",
