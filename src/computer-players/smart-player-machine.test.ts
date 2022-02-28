@@ -1,8 +1,12 @@
 import { DeepMockProxy, mockDeep } from "jest-mock-extended";
 import { AnyInterpreter, interpret } from "xstate";
 import { SimulatedClock } from "xstate/lib/SimulatedClock";
-import { playMove, requestMove } from "../game-manager";
-import { acceptMove, declineMove } from "../game-manager/player-model";
+import {
+  acceptMove,
+  declineMove,
+  playMove,
+  requestMove,
+} from "../game-manager";
 import { createPile, Pile } from "../nim";
 import {
   createSmartPlayerMachine,
@@ -190,5 +194,7 @@ describe("Random Player Actor", () => {
     expect(consoleSpy).toBeCalledTimes(1);
     expect(parent.send).toBeCalledTimes(1);
     expect(parent.send).toBeCalledWith(playMove(deps.secret, [12]));
+
+    consoleSpy.mockRestore();
   });
 });

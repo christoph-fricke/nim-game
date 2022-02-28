@@ -138,6 +138,8 @@ describe("Game Manager Actor", () => {
 
     actor.send(stopGame());
     expect(actor.state.hasTag("main_menu")).toBeTruthy();
+    expect(human.stop).toBeCalledTimes(1);
+    expect(computer.stop).toBeCalledTimes(1);
 
     actor.send(startGame());
     expect(actor.state.hasTag("playing")).toBeTruthy();
@@ -163,6 +165,8 @@ describe("Game Manager Actor", () => {
 
     expect(actor.state.hasTag("game_end")).toBeTruthy();
     expect(actor.state.hasTag("human_won")).toBeTruthy();
+    expect(human.stop).toBeCalledTimes(1);
+    expect(computer.stop).toBeCalledTimes(1);
 
     actor.send(startGame());
     expect(actor.state.hasTag("main_menu")).toBeTruthy();
@@ -186,6 +190,8 @@ describe("Game Manager Actor", () => {
 
     expect(actor.state.hasTag("game_end")).toBeTruthy();
     expect(actor.state.hasTag("human_lost")).toBeTruthy();
+    expect(human.stop).toBeCalledTimes(1);
+    expect(computer.stop).toBeCalledTimes(1);
 
     actor.send(startGame());
     expect(actor.state.hasTag("main_menu")).toBeTruthy();

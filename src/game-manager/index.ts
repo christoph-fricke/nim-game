@@ -9,5 +9,5 @@ export {
 } from "./game-manager-machine.model";
 export type { GameDifficulty } from "./game-manager-machine.model";
 
-export { requestMove } from "./player-model";
+export { requestMove, acceptMove, declineMove } from "./player-model";
 export type { PlayerEvent, PlayerActor, PlayerFactory } from "./player-model";

@@ -1,8 +1,12 @@
-import { mockDeep, DeepMockProxy } from "jest-mock-extended";
-import { interpret, AnyInterpreter } from "xstate";
+import { DeepMockProxy, mockDeep } from "jest-mock-extended";
+import { AnyInterpreter, interpret } from "xstate";
 import { SimulatedClock } from "xstate/lib/SimulatedClock";
-import { playMove, requestMove } from "../game-manager";
-import { acceptMove, declineMove } from "../game-manager/player-model";
+import {
+  acceptMove,
+  declineMove,
+  playMove,
+  requestMove,
+} from "../game-manager";
 import { createPile } from "../nim";
 import {
   createRandomPlayerMachine,
@@ -84,10 +88,7 @@ describe("Random Player Actor", () => {
 
     parent.send.mockClear();
     deps.getRandomTake.mockClear();
-    actor = interpret(createRandomPlayerMachine(deps), {
-      clock,
-      parent,
-    }).start();
+    actor.send(acceptMove());
 
     // Should reply with 2 positions
     deps.getRandomTake.mockReturnValue(2);
