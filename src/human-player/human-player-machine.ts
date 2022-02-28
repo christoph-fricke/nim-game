@@ -1,4 +1,4 @@
-import { assign, createMachine, sendParent, t } from "xstate";
+import { ActorRefFrom, assign, createMachine, sendParent, t } from "xstate";
 import { PlayerEvent, playMove, stopGame } from "../game-manager";
 import { createMove, getFreePositions, maxAllowed, Move } from "../nim";
 import {
@@ -6,6 +6,8 @@ import {
   HumanContext,
   HumanEvent,
 } from "./human-player-machine.model";
+
+export type HumanPlayerActor = ActorRefFrom<typeof createHumanPlayerMachine>;
 
 export interface HumanPlayerDependencies {
   /** The `secret` is provided by the game manager to verify moves from this actor. */
@@ -28,6 +30,7 @@ export function createHumanPlayerMachine(deps: HumanPlayerDependencies) {
       },
       states: {
         AwaitingRequest: {
+          tags: "waiting",
           on: {
             "game.moves.request": {
               target: "Playing",
@@ -56,7 +59,7 @@ export function createHumanPlayerMachine(deps: HumanPlayerDependencies) {
                   {
                     target: "NonSelected",
                     cond: "willEmptyMove",
-                    actions: "updateMove",
+                    actions: "clearMove",
                   },
                   {
                     target: "MoveSelected",
@@ -70,10 +73,11 @@ export function createHumanPlayerMachine(deps: HumanPlayerDependencies) {
           },
         },
         AwaitingResponse: {
+          tags: "waiting",
           on: {
             "game.moves.accept": {
               target: "AwaitingRequest",
-              actions: "saveGameState",
+              actions: ["saveGameState", "clearMove"],
             },
             "game.moves.decline": "Playing",
           },
