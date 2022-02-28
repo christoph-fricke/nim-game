@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import { render } from "react-dom";
-import { App } from "./app";
+import { Game } from "./game";
 import { InspectorToggle, showInspector } from "./inspector/inspector";
 
 (async function main() {
@@ -9,7 +9,7 @@ import { InspectorToggle, showInspector } from "./inspector/inspector";
   const root = document.querySelector("#root");
   render(
     <StrictMode>
-      <App />
+      <Game />
       <InspectorToggle />
     </StrictMode>,
     root

@@ -1,0 +1,24 @@
+.page {
+  padding: 24px;
+  padding-top: 6vh;
+  display: flex;
+  justify-content: center;
+}
+
+.content {
+  width: 100%;
+  max-width: 750px;
+
+  display: flex;
+  gap: 24px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gameTitle {
+  font-size: clamp(2rem, 10vw, 4rem);
+  font-weight: bold;
+  color: var(--violet10);
+  margin: 0;
+  padding-block-end: var(--space24);
+}
