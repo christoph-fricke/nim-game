@@ -5,17 +5,19 @@ import { cx } from "./utils";
 export function Select(
   props: SelectHTMLAttributes<HTMLSelectElement> & { id: string; label: string }
 ): JSX.Element {
+  const { label, ...rest } = props;
+
   return (
     <div className={styles.selectGroup}>
-      <label className={styles.label} htmlFor={props.id}>
-        {props.label}
+      <label className={styles.label} htmlFor={rest.id}>
+        {label}
       </label>
       <select
-        {...props}
-        id={props.id}
-        className={cx(styles.select, props.className)}
+        {...rest}
+        id={rest.id}
+        className={cx(styles.select, rest.className)}
       >
-        {props.children}
+        {rest.children}
       </select>
     </div>
   );
