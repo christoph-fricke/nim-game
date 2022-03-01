@@ -1,6 +1,5 @@
 .page {
-  padding: 24px;
-  padding-top: 6vh;
+  padding: calc(var(--space24) * 3) var(--space24);
   display: flex;
   justify-content: center;
 }

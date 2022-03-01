@@ -9,6 +9,7 @@
   color: var(--violet12);
   transition: all var(--transition);
   cursor: pointer;
+  user-select: none;
 
   padding: 0.4em 0.8em;
   font-size: 1.5rem;

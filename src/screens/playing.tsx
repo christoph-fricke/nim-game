@@ -61,7 +61,7 @@ export function Playing(props: { human: HumanPlayerActor }) {
       <Button onClick={events.submitMove} disabled={!state.canSubmit}>
         Make Move
       </Button>
-      <Button onClick={events.stopGame}>Cancel Game</Button>
+      <Button onClick={events.stopGame}>Leave</Button>
     </GameLayout>
   );
 }

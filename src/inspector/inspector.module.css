@@ -5,9 +5,10 @@
 
   border: var(--border-default) solid transparent;
   border-radius: var(--radius-default);
-  background-color: transparent;
+  background-color: var(--violet1);
   transition: all var(--transition);
   cursor: pointer;
+  user-select: none;
 
   padding: 0.4em 0.8em;
   position: fixed;

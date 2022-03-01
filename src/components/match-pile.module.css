@@ -58,6 +58,8 @@
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
+  justify-content: center;
   /* Avoid cursor flickering when moving between matches. */
   cursor: grab;
+  user-select: none;
 }
