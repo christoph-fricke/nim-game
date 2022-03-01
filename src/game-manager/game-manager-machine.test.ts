@@ -172,8 +172,10 @@ describe("Game Manager Actor", () => {
     actor.send(playMove(secrets.computer, [7]));
 
     expectedState[6] = "player1";
+    expect(human.send).toBeCalledTimes(6); // 3 Requests + 3 Accepts
     expect(human.send).lastCalledWith(acceptMove(expectedState));
     expectedState[7] = "player2";
+    expect(computer.send).toBeCalledTimes(6); // 3 Requests + 3 Accepts
     expect(computer.send).lastCalledWith(acceptMove(expectedState));
 
     expect(actor.state.hasTag("human_won")).toBeTruthy();
@@ -201,9 +203,11 @@ describe("Game Manager Actor", () => {
     expectedState[9] = expectedState[8] = expectedState[7] = "player2";
 
     actor.send(playMove(secrets.human, [6]));
-
+    expect(computer.send).toBeCalledTimes(4); // 2 Requests + 2 Accepts
     expect(computer.send).lastCalledWith(acceptMove(expectedState));
+
     expectedState[6] = "player1";
+    expect(human.send).toBeCalledTimes(6); // 3 Requests + 3 Accepts
     expect(human.send).lastCalledWith(acceptMove(expectedState));
 
     expect(actor.state.hasTag("human_lost")).toBeTruthy();
