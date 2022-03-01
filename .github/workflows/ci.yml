@@ -56,7 +56,7 @@ jobs:
           path: dist
       - run: npm ci
       - run: npx playwright install --with-deps
-      - run: npm run playwright -- --browsers=all
+      - run: npm run playwright -- --browser=all
       - if: ${{ failure() }}
         uses: actions/upload-artifact@v2
         with:
