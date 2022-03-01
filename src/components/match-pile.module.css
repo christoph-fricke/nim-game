@@ -2,9 +2,11 @@
   appearance: none;
   background-color: transparent;
   border: none;
+  outline: none;
   border-radius: var(--radius-default);
   padding: 0;
   cursor: grab;
+  height: min(20vh, 250px);
 
   display: flex;
   flex-direction: column;
@@ -24,6 +26,7 @@
     inset 0px 0px 4px 4px var(--violet9);
 }
 
+.match:focus-visible,
 .match[data-state="selected"] {
   box-shadow: 0px 0px 4px 4px var(--green7), inset 0px 0px 4px 4px var(--green7);
 }
@@ -34,8 +37,8 @@
   flex-shrink: 0;
   background-color: var(--red9);
   border-radius: calc(var(--radius-default) * 2);
-  width: 28px;
-  height: 28px;
+  width: 1.75rem;
+  height: 1.75rem;
 }
 
 /* Removed matches are "burned down" */
@@ -50,13 +53,13 @@
   flex-shrink: 0;
   background-color: var(--brown10);
   border-radius: var(--radius-default);
-  width: 24px;
-  height: 200px;
+  width: 1.5rem;
+  flex-grow: 2;
 }
 
 .pile {
   display: flex;
-  gap: 16px;
+  gap: var(--space16);
   flex-wrap: wrap;
   justify-content: center;
   /* Avoid cursor flickering when moving between matches. */

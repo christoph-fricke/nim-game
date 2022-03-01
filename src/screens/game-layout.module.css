@@ -1,5 +1,6 @@
 .page {
-  padding: calc(var(--space24) * 3) var(--space24);
+  padding: var(--space24);
+  padding-block-end: calc(var(--space24) * 4);
   display: flex;
   justify-content: center;
 }
@@ -9,7 +10,7 @@
   max-width: 750px;
 
   display: flex;
-  gap: 24px;
+  gap: var(--space24);
   flex-direction: column;
   align-items: center;
 }
@@ -19,5 +20,5 @@
   font-weight: bold;
   color: var(--violet10);
   margin: 0;
-  padding-block-end: var(--space24);
+  padding-block-end: var(--space16);
 }

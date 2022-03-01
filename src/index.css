@@ -4,7 +4,7 @@
 @import "npm:@radix-ui/colors/greenDark.css";
 
 :root {
-  --space12: 12px;
+  --space8: 8px;
   --space16: 16px;
   --space24: 24px;
   --space48: 48px;
