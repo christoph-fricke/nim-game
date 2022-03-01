@@ -62,7 +62,6 @@ export interface Typegen0 {
     | "playing"
     | "human_move"
     | "computer_move"
-    | "game_end"
     | "human_won"
     | "human_lost";
 }

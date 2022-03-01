@@ -176,7 +176,6 @@ describe("Game Manager Actor", () => {
     expectedState[7] = "player2";
     expect(computer.send).lastCalledWith(acceptMove(expectedState));
 
-    expect(actor.state.hasTag("game_end")).toBeTruthy();
     expect(actor.state.hasTag("human_won")).toBeTruthy();
     expect(human.stop).toBeCalledTimes(1);
     expect(computer.stop).toBeCalledTimes(1);
@@ -207,7 +206,6 @@ describe("Game Manager Actor", () => {
     expectedState[6] = "player1";
     expect(human.send).lastCalledWith(acceptMove(expectedState));
 
-    expect(actor.state.hasTag("game_end")).toBeTruthy();
     expect(actor.state.hasTag("human_lost")).toBeTruthy();
     expect(human.stop).toBeCalledTimes(1);
     expect(computer.stop).toBeCalledTimes(1);

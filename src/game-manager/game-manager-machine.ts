@@ -121,14 +121,14 @@ export function createGameManagerMachine(deps: GameManagerDependencies) {
           },
         },
         HumanWon: {
-          tags: ["game_end", "human_won"],
+          tags: ["human_won"],
           id: "HumanWon",
           on: {
             "game.start": "MainMenu",
           },
         },
         HumanLost: {
-          tags: ["game_end", "human_lost"],
+          tags: ["human_lost"],
           id: "HumanLost",
           on: {
             "game.start": "MainMenu",
