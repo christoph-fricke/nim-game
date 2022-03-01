@@ -51,6 +51,16 @@ describe("Game Manager Actor", () => {
     expect(actor.state.context.difficulty).toBe("extreme");
   });
 
+  it("should ignore invalid difficulties", () => {
+    const actor = interpret(createGameManagerMachine(deps)).start();
+
+    expect(actor.state.can(changeDifficulty("medium"))).toBeTruthy();
+    expect(actor.state.can(changeDifficulty("extreme"))).toBeTruthy();
+
+    expect(actor.state.can(changeDifficulty("easy"))).toBeFalsy();
+    expect(actor.state.can(changeDifficulty("hard"))).toBeFalsy();
+  });
+
   it("should start the player actors when a game is started", () => {
     const actor = interpret(createGameManagerMachine(deps)).start();
     const secrets = actor.state.context.secrets;
@@ -172,11 +182,12 @@ describe("Game Manager Actor", () => {
     actor.send(playMove(secrets.computer, [7]));
 
     expectedState[6] = "player1";
+    expect(human.send).toBeCalledTimes(6); // 3 Requests + 3 Accepts
     expect(human.send).lastCalledWith(acceptMove(expectedState));
     expectedState[7] = "player2";
+    expect(computer.send).toBeCalledTimes(6); // 3 Requests + 3 Accepts
     expect(computer.send).lastCalledWith(acceptMove(expectedState));
 
-    expect(actor.state.hasTag("game_end")).toBeTruthy();
     expect(actor.state.hasTag("human_won")).toBeTruthy();
     expect(human.stop).toBeCalledTimes(1);
     expect(computer.stop).toBeCalledTimes(1);
@@ -202,12 +213,13 @@ describe("Game Manager Actor", () => {
     expectedState[9] = expectedState[8] = expectedState[7] = "player2";
 
     actor.send(playMove(secrets.human, [6]));
-
+    expect(computer.send).toBeCalledTimes(4); // 2 Requests + 2 Accepts
     expect(computer.send).lastCalledWith(acceptMove(expectedState));
+
     expectedState[6] = "player1";
+    expect(human.send).toBeCalledTimes(6); // 3 Requests + 3 Accepts
     expect(human.send).lastCalledWith(acceptMove(expectedState));
 
-    expect(actor.state.hasTag("game_end")).toBeTruthy();
     expect(actor.state.hasTag("human_lost")).toBeTruthy();
     expect(human.stop).toBeCalledTimes(1);
     expect(computer.stop).toBeCalledTimes(1);

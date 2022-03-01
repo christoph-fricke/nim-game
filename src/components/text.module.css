@@ -3,6 +3,7 @@ span.text {
   color: var(--violet12);
   font-family: var(--font-default);
   margin: 0;
+  line-height: 1.5;
 }
 
 h2.text {

@@ -1,6 +1,7 @@
 .button {
   box-sizing: border-box;
   appearance: none;
+  -webkit-appearance: none;
   border: none;
   outline: none;
 
@@ -9,6 +10,8 @@
   color: var(--violet12);
   transition: all var(--transition);
   cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
 
   padding: 0.4em 0.8em;
   font-size: 1.5rem;
@@ -31,4 +34,20 @@
 
 .button:active {
   background-color: var(--violet7);
+}
+
+.button[data-variant="secondary"] {
+  background-color: transparent;
+}
+
+.button:hover {
+  background-color: var(--violet4);
+}
+
+.button:focus-visible {
+  background-color: var(--violet5);
+}
+
+.button:active {
+  background-color: var(--violet5);
 }
