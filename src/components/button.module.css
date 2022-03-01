@@ -33,3 +33,19 @@
 .button:active {
   background-color: var(--violet7);
 }
+
+.button[data-variant="secondary"] {
+  background-color: transparent;
+}
+
+.button:hover {
+  background-color: var(--violet4);
+}
+
+.button:focus-visible {
+  background-color: var(--violet5);
+}
+
+.button:active {
+  background-color: var(--violet5);
+}
