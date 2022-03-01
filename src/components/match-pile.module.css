@@ -1,6 +1,7 @@
 .match {
   appearance: none;
   background-color: transparent;
+  -webkit-appearance: none;
   border: none;
   outline: none;
   border-radius: var(--radius-default);
@@ -26,8 +27,12 @@
     inset 0px 0px 4px 4px var(--violet9);
 }
 
-.match:focus-visible,
 .match[data-state="selected"] {
+  box-shadow: 0px 0px 4px 4px var(--green7), inset 0px 0px 4px 4px var(--green7);
+}
+
+/* Don't group selector to not invalidate the previous rule in case ":focus-visible" is not supported */
+.match:focus-visible {
   box-shadow: 0px 0px 4px 4px var(--green7), inset 0px 0px 4px 4px var(--green7);
 }
 
@@ -65,4 +70,5 @@
   /* Avoid cursor flickering when moving between matches. */
   cursor: grab;
   user-select: none;
+  -webkit-user-select: none;
 }

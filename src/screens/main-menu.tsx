@@ -1,4 +1,5 @@
 import { Button } from "../components/button";
+import { Option, Select } from "../components/select";
 import type { GameDifficulty } from "../game-manager";
 import { GameLayout } from "./game-layout";
 
@@ -11,18 +12,17 @@ export interface MainMenuProps {
 export function MainMenu(props: MainMenuProps): JSX.Element {
   return (
     <GameLayout>
-      <label htmlFor="difficulty">Difficulty</label>
-      <select
+      <Select
         id="difficulty"
-        name="difficulty"
+        label="Computer Difficulty:"
         value={props.difficulty}
         onChange={(e) =>
           props.onDifficultyChange(e.currentTarget.value as GameDifficulty)
         }
       >
-        <option value="medium">Medium</option>
-        <option value="extreme">Extreme</option>
-      </select>
+        <Option value="medium">Medium</Option>
+        <Option value="extreme">Extreme</Option>
+      </Select>
       <Button onClick={props.onStart}>New Game</Button>
     </GameLayout>
   );

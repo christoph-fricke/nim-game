@@ -1,6 +1,7 @@
 .inspectorToggle {
   box-sizing: border-box;
   appearance: none;
+  -webkit-appearance: none;
   outline: none;
 
   border: var(--border-default) solid transparent;
@@ -9,6 +10,7 @@
   transition: all var(--transition);
   cursor: pointer;
   user-select: none;
+  -webkit-user-select: none;
 
   padding: 0.4em 0.8em;
   position: fixed;
