@@ -27,11 +27,11 @@
   },
   "dependencies": {
     "@radix-ui/colors": "^0.1.8",
-    "@xstate/inspect": "^0.6.2",
-    "@xstate/react": "^2.0.0",
+    "@xstate/inspect": "^0.6.3",
+    "@xstate/react": "^2.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "xstate": "^4.30.2",
+    "xstate": "^4.30.3",
     "xsystem": "^0.5.0"
   },
   "devDependencies": {
