@@ -57,8 +57,8 @@ export function useMainState(game: GameManagerActor) {
 
   const events = useMemo(
     () => ({
-      changeDifficulty: (diff: string) => game.send(changeDifficulty(diff)),
-      startGame: () => game.send(startGame()),
+      changeDifficulty: changeDifficulty.createSendCall(game),
+      startGame: startGame.createSendCall(game),
     }),
     [game]
   );

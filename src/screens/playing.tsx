@@ -26,9 +26,9 @@ function useHumanState(human: HumanPlayerActor) {
 
   const events = useMemo(
     () => ({
-      toggleMatch: (i: number) => human.send(toggleMatch(i as Position)),
-      submitMove: () => human.send(submitMove()),
-      stopGame: () => human.send(stopGame()),
+      toggleMatch: toggleMatch.createSendCall(human),
+      submitMove: submitMove.createSendCall(human),
+      stopGame: stopGame.createSendCall(human),
     }),
     [human]
   );
@@ -52,7 +52,7 @@ export function Playing(props: { human: HumanPlayerActor }) {
             <Match
               key={pos}
               state={state.matchState(pos)}
-              onToggle={() => events.toggleMatch(pos)}
+              onToggle={() => events.toggleMatch(pos as Position)}
               disabled={!state.canToggle(pos)}
             />
           );
