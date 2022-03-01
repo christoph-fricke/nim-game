@@ -10,6 +10,7 @@ interface MatchProps {
 export function Match(props: MatchProps): JSX.Element {
   return (
     <button
+      role="listitem"
       data-state={props.state}
       disabled={props.disabled}
       onClick={props.onToggle}
@@ -24,5 +25,9 @@ interface PileProps {
 }
 
 export function Pile(props: PileProps): JSX.Element {
-  return <section className={styles.pile}>{props.children}</section>;
+  return (
+    <section role="list" className={styles.pile}>
+      {props.children}
+    </section>
+  );
 }
