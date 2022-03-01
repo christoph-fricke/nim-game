@@ -51,6 +51,16 @@ describe("Game Manager Actor", () => {
     expect(actor.state.context.difficulty).toBe("extreme");
   });
 
+  it("should ignore invalid difficulties", () => {
+    const actor = interpret(createGameManagerMachine(deps)).start();
+
+    expect(actor.state.can(changeDifficulty("medium"))).toBeTruthy();
+    expect(actor.state.can(changeDifficulty("extreme"))).toBeTruthy();
+
+    expect(actor.state.can(changeDifficulty("easy"))).toBeFalsy();
+    expect(actor.state.can(changeDifficulty("hard"))).toBeFalsy();
+  });
+
   it("should start the player actors when a game is started", () => {
     const actor = interpret(createGameManagerMachine(deps)).start();
     const secrets = actor.state.context.secrets;

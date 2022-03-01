@@ -7,6 +7,7 @@ import {
   t,
 } from "xstate";
 import { pure } from "xstate/lib/actions";
+import type { GameDifficulty } from ".";
 import { applyMove, createPile, isEmpty, validateMove } from "../nim";
 import {
   GameManagerEvent,
@@ -46,6 +47,7 @@ export function createGameManagerMachine(deps: GameManagerDependencies) {
             "game.start": "Playing",
             "game.change_difficulty": {
               internal: true,
+              cond: "isDifficulty",
               actions: "setDifficulty",
             },
           },
@@ -145,9 +147,13 @@ export function createGameManagerMachine(deps: GameManagerDependencies) {
         moveFromComputer: (c, e) => e.secret === c.secrets.computer,
         validMoveFromComputer: (c, e) =>
           e.secret === c.secrets.computer && validateMove(c.pile, e.move),
+        isDifficulty: (c, e) =>
+          e.difficulty === "medium" || e.difficulty === "extreme",
       },
       actions: {
-        setDifficulty: assign({ difficulty: (_, e) => e.difficulty }),
+        setDifficulty: assign({
+          difficulty: (_, e) => e.difficulty as GameDifficulty,
+        }),
         resetGame: assign({ pile: (c) => createPile() }),
         spawnPlayers: assign({
           players: (c) => ({

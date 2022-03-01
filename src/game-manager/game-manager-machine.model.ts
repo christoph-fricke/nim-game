@@ -43,7 +43,7 @@ export const stopGame = createEvent("game.stop");
 
 export const changeDifficulty = createEvent(
   "game.change_difficulty",
-  (difficulty: GameDifficulty) => ({ difficulty })
+  (difficulty: string) => ({ difficulty })
 );
 
 export const playMove = createEvent(

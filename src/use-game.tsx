@@ -4,7 +4,6 @@ import { computerFactory } from "./computer-players";
 import {
   changeDifficulty,
   createGameManagerMachine,
-  GameDifficulty,
   GameManagerActor,
   GameManagerState,
   startGame,
@@ -58,8 +57,7 @@ export function useMainState(game: GameManagerActor) {
 
   const events = useMemo(
     () => ({
-      changeDifficulty: (diff: GameDifficulty) =>
-        game.send(changeDifficulty(diff)),
+      changeDifficulty: (diff: string) => game.send(changeDifficulty(diff)),
       startGame: () => game.send(startGame()),
     }),
     [game]

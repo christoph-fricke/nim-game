@@ -6,7 +6,7 @@ import { GameLayout } from "./game-layout";
 export interface MainMenuProps {
   difficulty: GameDifficulty;
   onStart(): void;
-  onDifficultyChange(difficulty: GameDifficulty): void;
+  onDifficultyChange(difficulty: string): void;
 }
 
 export function MainMenu(props: MainMenuProps): JSX.Element {
@@ -16,9 +16,7 @@ export function MainMenu(props: MainMenuProps): JSX.Element {
         id="difficulty"
         label="Computer Difficulty:"
         value={props.difficulty}
-        onChange={(e) =>
-          props.onDifficultyChange(e.currentTarget.value as GameDifficulty)
-        }
+        onChange={(e) => props.onDifficultyChange(e.currentTarget.value)}
       >
         <Option value="medium">Medium</Option>
         <Option value="extreme">Extreme</Option>

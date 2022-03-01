@@ -28,6 +28,7 @@ export interface Typegen0 {
   };
   eventsCausingServices: {};
   eventsCausingGuards: {
+    isDifficulty: "game.change_difficulty";
     matchesRemaining:
       | "done.state.GameManager.Playing.HumanMove"
       | "done.state.GameManager.Playing.ComputerMove";
