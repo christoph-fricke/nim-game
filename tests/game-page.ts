@@ -47,7 +47,7 @@ export class GamePage {
 
   public match(position: Position) {
     return this.page.locator(
-      `button[role="listitem"][aria-label="Match"] >> nth=${position}`
+      `button[role="listitem"][aria-label="Match ${position + 1}"]`
     );
   }
 

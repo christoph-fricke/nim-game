@@ -51,8 +51,9 @@ export function Playing(props: { human: HumanPlayerActor }) {
           return (
             <Match
               key={pos}
+              position={pos as Position}
               state={state.matchState(pos)}
-              onToggle={() => events.toggleMatch(pos as Position)}
+              onToggle={events.toggleMatch}
               disabled={!state.canToggle(pos)}
             />
           );
