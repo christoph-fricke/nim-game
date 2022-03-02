@@ -2,6 +2,7 @@
   appearance: none;
   background-color: transparent;
   -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
   border: none;
   outline: none;
   border-radius: var(--radius-default);
@@ -20,16 +21,18 @@
 }
 
 .match[data-state="player1"] {
-  box-shadow: 0px 0px 4px 4px var(--green9), inset 0px 0px 4px 4px var(--green9);
+  background-color: var(--green9);
+  box-shadow: 0px 0px 4px 4px var(--green9);
 }
 
 .match[data-state="player2"] {
-  box-shadow: 0px 0px 4px 4px var(--violet9),
-    inset 0px 0px 4px 4px var(--violet9);
+  background-color: var(--violet9);
+  box-shadow: 0px 0px 4px 4px var(--violet9);
 }
 
 .match[data-state="selected"] {
-  box-shadow: 0px 0px 4px 4px var(--green7), inset 0px 0px 4px 4px var(--green7);
+  background-color: var(--green7);
+  box-shadow: 0px 0px 4px 4px var(--green7);
 }
 
 .match:not(:disabled):hover {
@@ -49,6 +52,7 @@
   border-radius: calc(var(--radius-default) * 2);
   width: 1.75rem;
   height: 1.75rem;
+  transition: all var(--transition);
 }
 
 /* Removed matches are "burned down" */

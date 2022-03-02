@@ -23,6 +23,11 @@ test.describe.parallel("Given the user opens the game", () => {
     await expect(game.hideInspectorBtn).toBeEnabled();
     await expect(game.showInspectorBtn).toBeHidden();
 
+    // "Show Inspector" state is persisted between reloads
+    await page.reload();
+    await expect(game.hideInspectorBtn).toBeEnabled();
+    await expect(game.showInspectorBtn).toBeHidden();
+
     await game.hideInspectorBtn.click();
   });
 
@@ -54,8 +59,8 @@ test.describe.parallel("Given the user plays a game", () => {
 
     await expect(game.startBtn).toBeHidden();
     await expect(game.moveBtn).toBeDisabled();
-
     await expect(game.gameHeader).toBeVisible();
+
     await expect(game.showInspectorBtn).toBeEnabled();
     await expect(game.hideInspectorBtn).toBeHidden();
 
@@ -97,8 +102,8 @@ test.describe.parallel("Given the user plays a game", () => {
     await expect(game.match(12)).toBeDisabled();
 
     // Other can be clicked after selected once are deselected
-    await game.match(5).click();
     await game.match(2).click();
+    await game.match(5).click();
     await game.match(0).click();
     await game.match(6).click();
   });
@@ -107,7 +112,7 @@ test.describe.parallel("Given the user plays a game", () => {
     page,
   }) => {
     let expectedState = createPile() as (Match | "selected")[];
-    let expectStateMatch = () =>
+    let expectMatchState = () =>
       Promise.all(
         expectedState.map((match, i) =>
           game.expectState(game.match(i as Position), match)
@@ -120,20 +125,20 @@ test.describe.parallel("Given the user plays a game", () => {
     await game.useSomeLuck(3);
     await game.startBtn.click();
 
-    await expectStateMatch();
+    await expectMatchState();
 
     await game.match(5).click();
     await game.match(2).click();
     await game.match(4).click();
 
     expectedState[5] = expectedState[2] = expectedState[4] = "selected";
-    await expectStateMatch();
+    await expectMatchState();
 
     await game.moveBtn.click();
 
     expectedState[5] = expectedState[2] = expectedState[4] = "player1";
     // Computer should take the first 3 free matches
     expectedState[0] = expectedState[1] = expectedState[3] = "player2";
-    await expectStateMatch();
+    await expectMatchState();
   });
 });

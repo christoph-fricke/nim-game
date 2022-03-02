@@ -63,6 +63,7 @@ describe("Random Player Actor", () => {
     clock.increment(2000);
 
     expect(deps.getRandomTake).toBeCalledTimes(1);
+    expect(parent.send).toBeCalledTimes(1);
     expect(parent.send).toBeCalledWith(playMove(deps.secret, [2]));
   });
 
@@ -84,6 +85,7 @@ describe("Random Player Actor", () => {
     expect(deps.getRandomTake).toBeCalledTimes(1);
     expect(parent.send).toBeCalledWith(playMove(deps.secret, [0, 1, 2]));
 
+    // Prepare for next request
     parent.send.mockClear();
     deps.getRandomTake.mockClear();
     pile[0] = pile[1] = pile[2] = "player1";
@@ -113,6 +115,7 @@ describe("Random Player Actor", () => {
 
     clock.increment(2000);
     expect(actor.state.can(requestMove(pile))).toBeFalsy();
+    expect(parent.send).toBeCalledWith(playMove(deps.secret, [0]));
 
     pile[0] = "player1";
     actor.send(acceptMove(pile));

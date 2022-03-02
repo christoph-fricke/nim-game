@@ -13,6 +13,8 @@ test.describe.parallel("Given a computer at medium difficulty", () => {
 
     await game.goto();
     await game.useSomeLuck(3);
+
+    await expect(game.difficulty).toHaveValue("medium");
     await game.startBtn.click();
 
     await game.match(0).click();
@@ -34,11 +36,12 @@ test.describe.parallel("Given a computer at medium difficulty", () => {
     // Computer takes 12
 
     await expect(game.wonText).toBeVisible();
+    await expect(game.gameHeader).toBeVisible();
     await game.againBtn.click();
     await expect(game.startBtn).toBeEnabled();
   });
 
-  test("When the user takes the last match, a loose screen is shown", async ({
+  test("When the user takes the last match, a lose screen is shown", async ({
     page,
   }) => {
     test.slow(
@@ -48,9 +51,9 @@ test.describe.parallel("Given a computer at medium difficulty", () => {
     const game = new GamePage(page);
 
     await game.goto();
+    await game.useSomeLuck(3);
 
     await expect(game.difficulty).toHaveValue("medium");
-    await game.useSomeLuck(3);
     await game.startBtn.click();
 
     await game.match(0).click();
@@ -71,6 +74,7 @@ test.describe.parallel("Given a computer at medium difficulty", () => {
     await game.moveBtn.click();
 
     await expect(game.lostText).toBeVisible();
+    await expect(game.gameHeader).toBeVisible();
     await game.againBtn.click();
     await expect(game.startBtn).toBeEnabled();
   });
@@ -113,6 +117,7 @@ test.describe.parallel("Given a computer at extreme difficulty", () => {
     await game.moveBtn.click();
 
     await expect(game.lostText).toBeVisible();
+    await expect(game.gameHeader).toBeVisible();
     await game.againBtn.click();
     await expect(game.startBtn).toBeEnabled();
   });

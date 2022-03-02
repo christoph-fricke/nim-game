@@ -2,16 +2,10 @@
 
 export type Player = "player1" | "player2";
 
-/**
- * A match in a {@link Pile} is modelled as either "free to take" or
- * "already taken by playerX".
- */
+/** A match in a {@link Pile} is modelled as either "free to take" or "already taken by playerX". */
 export type Match = "free" | Player;
 
-/**
- * In a {@link Pile} of 13 {@link Match}es, each match has a position that is
- * equal to its array index.
- */
+/** In a {@link Pile}, each match has a position that is defined by its array index. */
 export type Position = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 
 /** A move consists of the indices a {@link Player} wants to take from the {@link Pile}. */
@@ -24,7 +18,7 @@ export type AllowedMoveLength = 1 | 2 | 3;
 export const minAllowed: AllowedMoveLength = 1;
 export const maxAllowed: AllowedMoveLength = 3;
 
-/** A pile is modelled as an array of {@link Match}es. */
+/** A pile is modelled as an array of 13 {@link Match}es. */
 export type Pile = [
   Match,
   Match,

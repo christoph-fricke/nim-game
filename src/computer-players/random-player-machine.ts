@@ -1,7 +1,7 @@
 import { assign, createMachine, sendParent, t } from "xstate";
 import { PlayerEvent, playMove } from "../game-manager";
-import type { Move, AllowedMoveLength, Position } from "../nim";
-import { getFreePositions, createPile, createMove } from "../nim";
+import type { AllowedMoveLength, Move, Position } from "../nim";
+import { createMove, createPile, getFreePositions } from "../nim";
 
 interface RandomPlayerContext {
   freePos: Position[];

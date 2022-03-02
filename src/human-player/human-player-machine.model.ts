@@ -3,7 +3,7 @@ import { createPile, getFreePositions, Move, Pile, Position } from "../nim";
 
 export interface HumanContext {
   pile: Pile;
-  freePos: Position[];
+  freePositions: Position[];
   nextMove: Move;
 }
 
@@ -11,8 +11,9 @@ export function getInitialContext(): HumanContext {
   const pile = createPile();
   return {
     pile,
-    freePos: getFreePositions(pile),
-    // Initially the human player should have no sticks selected to avoid confusing the user.
+    freePositions: getFreePositions(pile),
+    // Initially the human player can't have "placeholder matches" selected since
+    // it would be wrongly displayed in the UI.
     nextMove: [] as unknown as Move,
   };
 }

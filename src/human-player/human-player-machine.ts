@@ -95,18 +95,18 @@ export function createHumanPlayerMachine(deps: HumanPlayerDependencies) {
     {
       guards: {
         validPositionAndMoveNotFull: (c, e) =>
-          c.freePos.includes(e.position) &&
+          c.freePositions.includes(e.position) &&
           (c.nextMove.includes(e.position) || c.nextMove.length < maxAllowed),
         willEmptyMove: (c, e) =>
           c.nextMove.length === 1 && c.nextMove.includes(e.position),
       },
       actions: {
         proxyGameStop: sendParent(stopGame()),
-        saveGameState: assign((c, e) => ({
+        saveGameState: assign((_, e) => ({
           pile: e.pile,
-          freePos: getFreePositions(e.pile),
+          freePositions: getFreePositions(e.pile),
         })),
-        clearMove: assign({ nextMove: (c) => [] as unknown as Move }),
+        clearMove: assign({ nextMove: (_) => [] as unknown as Move }),
         updateMove: assign({
           nextMove: (c, e) =>
             c.nextMove.includes(e.position)

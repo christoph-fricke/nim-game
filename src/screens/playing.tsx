@@ -1,11 +1,11 @@
-import type { HumanPlayerActor, HumanPlayerState } from "../human-player";
-import { toggleMatch, stopGame, submitMove } from "../human-player";
-import { Button } from "../components/button";
-import { Text } from "../components/text";
-import { Match, Pile } from "../components/match-pile";
-import type { Position } from "../nim";
 import { useSelector } from "@xstate/react";
 import { useMemo } from "react";
+import { Button } from "../components/button";
+import { Match, Pile } from "../components/match-pile";
+import { Text } from "../components/text";
+import type { HumanPlayerActor, HumanPlayerState } from "../human-player";
+import { stopGame, submitMove, toggleMatch } from "../human-player";
+import type { Position } from "../nim";
 import { GameLayout } from "./game-layout";
 
 function selectHumanState(state: HumanPlayerState) {
@@ -47,16 +47,15 @@ export function Playing(props: { human: HumanPlayerActor }) {
         <Text size="large">Waiting for Opponent</Text>
       )}
       <Pile>
-        {state.pile.map((_, pos) => {
-          return (
-            <Match
-              key={pos}
-              state={state.matchState(pos)}
-              onToggle={() => events.toggleMatch(pos as Position)}
-              disabled={!state.canToggle(pos)}
-            />
-          );
-        })}
+        {state.pile.map((_, pos) => (
+          <Match
+            key={pos}
+            position={pos as Position}
+            state={state.matchState(pos)}
+            onToggle={events.toggleMatch}
+            disabled={!state.canToggle(pos)}
+          />
+        ))}
       </Pile>
       <Button onClick={events.submitMove} disabled={!state.canSubmit}>
         Make Move

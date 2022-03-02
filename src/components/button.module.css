@@ -2,6 +2,7 @@
   box-sizing: border-box;
   appearance: none;
   -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
   border: none;
   outline: none;
 
@@ -9,6 +10,7 @@
   background-color: var(--violet9);
   color: var(--violet12);
   transition: all var(--transition);
+
   cursor: pointer;
   user-select: none;
   -webkit-user-select: none;
@@ -40,14 +42,14 @@
   background-color: transparent;
 }
 
-.button:hover {
+.button[data-variant="secondary"]:hover {
   background-color: var(--violet4);
 }
 
-.button:focus-visible {
+.button[data-variant="secondary"]:focus-visible {
   background-color: var(--violet5);
 }
 
-.button:active {
+.button[data-variant="secondary"]:active {
   background-color: var(--violet5);
 }

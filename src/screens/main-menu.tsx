@@ -20,6 +20,10 @@ export function MainMenu(props: MainMenuProps): JSX.Element {
         Click <em>Show Inspector</em> in the bottom right to visualize the logic
         that powers the user interface.
       </Text>
+      <Text as="p">
+        This is the Misère variant of Nim. Whoever takes the last of 13 matches
+        loses.
+      </Text>
       <Select
         id="difficulty"
         label="Computer Difficulty:"

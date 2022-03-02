@@ -1,10 +1,11 @@
-import type { Match as MatchState } from "../nim";
+import type { Match as MatchState, Position } from "../nim";
 import * as styles from "./match-pile.module.css";
 
 interface MatchProps {
   state: MatchState | "selected";
+  position: Position;
   disabled?: boolean;
-  onToggle(): void;
+  onToggle(position: Position): void;
 }
 
 export function Match(props: MatchProps): JSX.Element {
@@ -13,10 +14,10 @@ export function Match(props: MatchProps): JSX.Element {
       role="listitem"
       data-state={props.state}
       disabled={props.disabled}
-      onClick={props.onToggle}
+      onClick={() => props.onToggle(props.position)}
       className={styles.match}
-      aria-label="Match"
-    ></button>
+      aria-label={`Match ${props.position + 1}`}
+    />
   );
 }
 

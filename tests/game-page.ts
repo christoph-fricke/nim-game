@@ -47,13 +47,13 @@ export class GamePage {
 
   public match(position: Position) {
     return this.page.locator(
-      `button[role="listitem"][aria-label="Match"] >> nth=${position}`
+      `button[role="listitem"][aria-label="Match ${position + 1}"]`
     );
   }
 
   public expectState(match: Locator, state: Match | "selected") {
-    // Ideally this would done through extending expect. However I did not figure
-    // out how to do it with TS so it feels "native" to Playwright.
+    // Ideally, this would by extending expect instead. However I did not figure
+    // out how to do it with TS in a way that feels "native" to Playwright.
     // https://playwright.dev/docs/api/class-test#test-extend and the web did not help...
     return expect(match).toHaveAttribute("data-state", state);
   }
