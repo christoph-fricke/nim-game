@@ -17,7 +17,7 @@ export function Match(props: MatchProps): JSX.Element {
       onClick={() => props.onToggle(props.position)}
       className={styles.match}
       aria-label={`Match ${props.position + 1}`}
-    ></button>
+    />
   );
 }
 

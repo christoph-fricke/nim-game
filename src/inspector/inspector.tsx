@@ -23,7 +23,6 @@ export function InspectorToggle() {
 
   function handleToggle() {
     if (isVisible) {
-      console.log("Removing Inspector");
       sessionStorage?.removeItem(storageKey);
       // Reload the page to unmount the inspector.
       document.location.reload();

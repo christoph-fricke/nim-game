@@ -8,6 +8,7 @@ import {
   Match,
   maxAllowed,
   minAllowed,
+  Move,
   Pile,
   validateMove,
 } from "./nim";
@@ -88,11 +89,7 @@ describe("getFreePositions", () => {
 
   it("should return positions of all free matches", () => {
     const pile = buildPile("player1");
-    pile[2] = "free";
-    pile[3] = "free";
-    pile[6] = "free";
-    pile[9] = "free";
-    pile[11] = "free";
+    pile[2] = pile[3] = pile[6] = pile[9] = pile[11] = "free";
 
     const free = getFreePositions(pile);
 
@@ -126,13 +123,20 @@ describe("validateMove", () => {
     expect(validateMove(pile, [1, 5, 11])).toBeFalsy();
   });
 
+  it("should return false if a invalid move is forcefully provided", () => {
+    const pile = buildPile("free");
+
+    const move = [0, 2, 3, 4] as unknown as Move;
+
+    expect(validateMove(pile, move)).toBeFalsy();
+  });
+
   it("should be true if the move only takes free positions", () => {
     let pile = buildPile("free");
     expect(validateMove(pile, [3, 8])).toBeTruthy();
 
-    pile = buildPile("free");
-    pile[4] = "player1";
-    pile[9] = "player2";
+    pile = buildPile("player1");
+    pile[3] = pile[10] = "free";
     expect(validateMove(pile, [3, 10])).toBeTruthy();
   });
 });

@@ -39,7 +39,7 @@ test.describe.parallel("Given a computer at medium difficulty", () => {
     await expect(game.startBtn).toBeEnabled();
   });
 
-  test("When the user takes the last match, a loose screen is shown", async ({
+  test("When the user takes the last match, a lose screen is shown", async ({
     page,
   }) => {
     test.slow(

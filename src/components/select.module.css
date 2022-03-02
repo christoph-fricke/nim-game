@@ -14,11 +14,11 @@
   -webkit-appearance: none;
   box-sizing: border-box;
   outline: none;
-  background-color: var(--violet3);
+
+  padding: 0.4em 0.8em;
   border: var(--border-default) solid var(--violet7);
   border-radius: var(--radius-default);
-  padding: 0.4em 0.8em;
-
+  background-color: var(--violet3);
   font-size: 1.25rem;
 }
 

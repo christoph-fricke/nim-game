@@ -12,7 +12,7 @@ import { humanFactory, HumanPlayerActor } from "./human-player";
 
 function selectHuman(state: GameManagerState): HumanPlayerActor | null {
   // Type cast cannot be avoided through generic factories and context values
-  // because it clashes with typing problems that currently exist with XState Typegen.
+  // because it results in type problems with XState Typegen metadata.
   return state.context.players.human as HumanPlayerActor | null;
 }
 
@@ -33,7 +33,7 @@ function selectMainState(state: GameManagerState) {
   })();
   const difficulty = state.context.difficulty;
 
-  // Casting prevents loss of the literal-type in return-type.
+  // Casting prevents loss of the literal-type in return type.
   return { screen: screen as typeof screen, difficulty };
 }
 

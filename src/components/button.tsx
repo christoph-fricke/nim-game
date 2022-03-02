@@ -1,6 +1,6 @@
 import type { HTMLAttributes } from "react";
-import { cx } from "./utils";
 import * as styles from "./button.module.css";
+import { cx } from "./utils";
 
 interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   disabled?: boolean;

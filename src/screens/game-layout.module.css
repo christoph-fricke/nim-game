@@ -1,8 +1,9 @@
 .page {
-  padding: var(--space24);
-  padding-block-end: calc(var(--space24) * 4);
   display: flex;
   justify-content: center;
+
+  padding: var(--space24);
+  padding-block-end: calc(var(--space24) * 4);
 }
 
 .content {
@@ -17,9 +18,10 @@
 }
 
 .gameTitle {
-  font-size: clamp(2rem, 10vw, 4rem);
-  font-weight: bold;
-  color: var(--violet10);
   margin: 0;
   padding-block-end: var(--space16);
+
+  color: var(--violet10);
+  font-size: clamp(2rem, 10vw, 4rem);
+  font-weight: bold;
 }
