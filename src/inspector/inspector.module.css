@@ -2,6 +2,7 @@
   box-sizing: border-box;
   appearance: none;
   -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
   outline: none;
 
   border: var(--border-default) solid transparent;
