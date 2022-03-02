@@ -67,7 +67,7 @@ players should never respond with an invalid move.
 
 ![communication sequence](./docs_sequence.png)
 
-## Potential Additions to the Project
+## Potential Additions / Improvements to the Project
 
 - Track the outcome of recent games and persist it in the browser. This could be
   done through a parallel state in the game-manager that loads persisted data
@@ -76,6 +76,13 @@ players should never respond with an invalid move.
   each time the computer plays a move. They could be sped up by exposing a
   global variable that changes how long computers think and could be changed
   through "page evaluations" in Playwright.
+- Apart from the `calculateMove` action, the computer actors are currently
+  identical. Given that their state-flow does not have to be identical and I
+  wanted to focus on showcasing multiple actors, I decided to keep them
+  separated. Alternatively, they could be refactored to a single actor with a
+  `calculateMove` dependency function, which would then be provided by the
+  `computerFactory` based on the strategy that should be chosen for the given
+  difficulty.
 - The created actor architecture is a decent foundation to distribute the game
   between a server and clients to enable multiplayer. However, it requires
   further decoupling of the game-manager from the UI and the development of a
