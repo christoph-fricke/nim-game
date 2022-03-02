@@ -13,6 +13,8 @@ test.describe.parallel("Given a computer at medium difficulty", () => {
 
     await game.goto();
     await game.useSomeLuck(3);
+
+    await expect(game.difficulty).toHaveValue("medium");
     await game.startBtn.click();
 
     await game.match(0).click();
@@ -49,9 +51,9 @@ test.describe.parallel("Given a computer at medium difficulty", () => {
     const game = new GamePage(page);
 
     await game.goto();
+    await game.useSomeLuck(3);
 
     await expect(game.difficulty).toHaveValue("medium");
-    await game.useSomeLuck(3);
     await game.startBtn.click();
 
     await game.match(0).click();

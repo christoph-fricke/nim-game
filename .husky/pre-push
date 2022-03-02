@@ -7,7 +7,7 @@ info () {
 }
 
 okay () {
-  # Print an success message
+  # Print a success message
   printf "[\033[00;32m OKAY \033[0m] $1\n"
 }
 

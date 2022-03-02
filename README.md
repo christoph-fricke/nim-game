@@ -7,9 +7,9 @@ Just want to play the game? Follow [this](https://nim-game.vercel.app) link!
 
 ## Getting Started
 
-This codebase is a common **npm** project without much surprises. After cloning,
-dependencies can be installed with `npm ci` and any of the scripts below can be
-invoked. Most common use cases:
+The setup for this project is similar to most **npm** projects without much
+surprises. After cloning, dependencies can be installed with `npm ci` and any of
+the scripts below can be invoked. Most common use cases:
 
 - `npm start` to develop and serve with a Parcel dev server.
 - `npm run build` and `npm run serve` to view a production optimized build.

@@ -1,6 +1,7 @@
 {
   "name": "nim-game",
   "version": "1.0.0",
+  "private": true,
   "author": "Christoph Fricke <christoph@frickeonline.de>",
   "description": "An implementation of Nim with XState and React.",
   "repository": "github:christoph-fricke/nim-game",
