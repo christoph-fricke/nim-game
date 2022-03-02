@@ -34,6 +34,7 @@ test.describe.parallel("Given a computer at medium difficulty", () => {
     // Computer takes 12
 
     await expect(game.wonText).toBeVisible();
+    await expect(game.gameHeader).toBeVisible();
     await game.againBtn.click();
     await expect(game.startBtn).toBeEnabled();
   });
@@ -71,6 +72,7 @@ test.describe.parallel("Given a computer at medium difficulty", () => {
     await game.moveBtn.click();
 
     await expect(game.lostText).toBeVisible();
+    await expect(game.gameHeader).toBeVisible();
     await game.againBtn.click();
     await expect(game.startBtn).toBeEnabled();
   });
@@ -113,6 +115,7 @@ test.describe.parallel("Given a computer at extreme difficulty", () => {
     await game.moveBtn.click();
 
     await expect(game.lostText).toBeVisible();
+    await expect(game.gameHeader).toBeVisible();
     await game.againBtn.click();
     await expect(game.startBtn).toBeEnabled();
   });

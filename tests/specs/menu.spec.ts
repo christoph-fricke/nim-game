@@ -23,6 +23,11 @@ test.describe.parallel("Given the user opens the game", () => {
     await expect(game.hideInspectorBtn).toBeEnabled();
     await expect(game.showInspectorBtn).toBeHidden();
 
+    // "Show Inspector" state is persisted between reloads
+    await page.reload();
+    await expect(game.hideInspectorBtn).toBeEnabled();
+    await expect(game.showInspectorBtn).toBeHidden();
+
     await game.hideInspectorBtn.click();
   });
 
