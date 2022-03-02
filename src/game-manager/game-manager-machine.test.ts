@@ -1,24 +1,24 @@
 import {
-  mockDeep,
   DeepMockProxy,
-  MockProxy,
   mock,
+  mockDeep,
   mockFn,
+  MockProxy,
 } from "jest-mock-extended";
 import { interpret } from "xstate";
-import { acceptMove, declineMove, PlayerActor } from "./player-model";
+import { requestMove } from ".";
 import { createPile } from "../nim";
 import {
   createGameManagerMachine,
   GameManagerDependencies,
 } from "./game-manager-machine";
 import {
+  changeDifficulty,
+  playMove,
   startGame,
   stopGame,
-  playMove,
-  changeDifficulty,
 } from "./game-manager-machine.model";
-import { requestMove } from ".";
+import { acceptMove, declineMove, PlayerActor } from "./player-model";
 
 describe("Game Manager Actor", () => {
   let human: MockProxy<PlayerActor>;
@@ -34,14 +34,14 @@ describe("Game Manager Actor", () => {
     });
   });
 
-  it("should start with medium difficulty and an full pile of sticks", () => {
+  it("should start with medium difficulty and an full pile of matches", () => {
     const actor = interpret(createGameManagerMachine(deps)).start();
 
     expect(actor.state.context.difficulty).toBe("medium");
     expect(actor.state.context.pile).toStrictEqual(createPile());
   });
 
-  it("should start in the game menu and allow difficulty changes", () => {
+  it("should start in the main menu and allow difficulty changes", () => {
     const actor = interpret(createGameManagerMachine(deps)).start();
 
     expect(actor.state.hasTag("main_menu")).toBeTruthy();
@@ -49,6 +49,9 @@ describe("Game Manager Actor", () => {
 
     actor.send(changeDifficulty("extreme"));
     expect(actor.state.context.difficulty).toBe("extreme");
+
+    actor.send(changeDifficulty("medium"));
+    expect(actor.state.context.difficulty).toBe("medium");
   });
 
   it("should ignore invalid difficulties", () => {
@@ -109,17 +112,18 @@ describe("Game Manager Actor", () => {
 
     actor.send(startGame());
     expect(actor.state.can(playMove(secrets.computer, [0]))).toBeFalsy();
-    expect(actor.state.can(playMove(secrets.human, [0]))).toBeTruthy();
 
     actor.send(playMove(secrets.human, [0]));
     expectedState[0] = "player1";
-    expect(actor.state.can(playMove(secrets.computer, [1]))).toBeTruthy();
     expect(actor.state.can(playMove(secrets.human, [1]))).toBeFalsy();
 
-    expect(human.send).toBeCalledTimes(2);
-    expect(human.send).lastCalledWith(acceptMove(expectedState));
-    expect(computer.send).toBeCalledTimes(1);
-    expect(computer.send).toBeCalledWith(requestMove(expectedState));
+    actor.send(playMove(secrets.computer, [1]));
+    expectedState[1] = "player2";
+
+    expect(human.send).toBeCalledTimes(3);
+    expect(human.send).lastCalledWith(requestMove(expectedState));
+    expect(computer.send).toBeCalledTimes(2);
+    expect(computer.send).toBeCalledWith(acceptMove(expectedState));
   });
 
   it("should decline moves when the match is already taken", () => {
@@ -213,6 +217,7 @@ describe("Game Manager Actor", () => {
     expectedState[9] = expectedState[8] = expectedState[7] = "player2";
 
     actor.send(playMove(secrets.human, [6]));
+
     expect(computer.send).toBeCalledTimes(4); // 2 Requests + 2 Accepts
     expect(computer.send).lastCalledWith(acceptMove(expectedState));
 

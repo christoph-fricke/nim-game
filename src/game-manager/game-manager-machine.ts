@@ -1,12 +1,5 @@
-import {
-  ActorRefFrom,
-  assign,
-  createMachine,
-  send,
-  StateFrom,
-  t,
-} from "xstate";
-import { pure } from "xstate/lib/actions";
+import { ActorRefFrom, createMachine, StateFrom, t } from "xstate";
+import { assign, pure, send } from "xstate/lib/actions";
 import type { GameDifficulty } from ".";
 import { applyMove, createPile, isEmpty, validateMove } from "../nim";
 import {
@@ -15,10 +8,10 @@ import {
   getInitialContext,
 } from "./game-manager-machine.model";
 import {
-  PlayerFactory,
-  requestMove,
   acceptMove,
   declineMove,
+  PlayerFactory,
+  requestMove,
 } from "./player-model";
 
 export type GameManagerActor = ActorRefFrom<typeof createGameManagerMachine>;
@@ -147,14 +140,14 @@ export function createGameManagerMachine(deps: GameManagerDependencies) {
         moveFromComputer: (c, e) => e.secret === c.secrets.computer,
         validMoveFromComputer: (c, e) =>
           e.secret === c.secrets.computer && validateMove(c.pile, e.move),
-        isDifficulty: (c, e) =>
+        isDifficulty: (_, e) =>
           e.difficulty === "medium" || e.difficulty === "extreme",
       },
       actions: {
         setDifficulty: assign({
           difficulty: (_, e) => e.difficulty as GameDifficulty,
         }),
-        resetGame: assign({ pile: (c) => createPile() }),
+        resetGame: assign({ pile: (_) => createPile() }),
         spawnPlayers: assign({
           players: (c) => ({
             human: deps.spawnHumanPlayer({
@@ -167,10 +160,10 @@ export function createGameManagerMachine(deps: GameManagerDependencies) {
             }),
           }),
         }),
-        stopPlayers: pure((c) => [
-          // The provided stop actions appears to be unable to stop `ActorRef`s... ?
-          { type: "stop", exec: () => c.players.human?.stop?.() },
-          { type: "stop", exec: () => c.players.computer?.stop?.() },
+        stopPlayers: pure(() => [
+          // The provided `stop` action appears to be unable to stop `ActorRef`s... ?
+          { type: "stop", exec: (c) => c.players.human?.stop?.() },
+          { type: "stop", exec: (c) => c.players.computer?.stop?.() },
         ]),
         requestHumanMove: send((c) => requestMove(c.pile), {
           to: (c) => c.players.human!,

@@ -1,11 +1,11 @@
 import { DeepMockProxy, mockDeep } from "jest-mock-extended";
 import { AnyInterpreter, interpret } from "xstate";
 import {
-  stopGame,
-  playMove,
-  requestMove,
   acceptMove,
   declineMove,
+  playMove,
+  requestMove,
+  stopGame,
 } from "../game-manager";
 import { createPile } from "../nim";
 import {
@@ -148,6 +148,8 @@ describe("Human Player Actor", () => {
     expect(actor.state.can(requestMove(pile))).toBeFalsy();
 
     actor.send(acceptMove(pile));
+
+    expect(actor.state.context.nextMove).toStrictEqual([]);
 
     expect(actor.state.can(toggleMatch(4))).toBeFalsy();
     expect(actor.state.can(submitMove())).toBeFalsy();

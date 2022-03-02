@@ -1,6 +1,5 @@
 import { getRandomTake } from "./randomness";
 
-// TODO: Fix mock restoring...
 describe("getRandomTake", () => {
   const spy = jest.spyOn(Math, "random");
 
@@ -42,7 +41,7 @@ describe("getRandomTake", () => {
   });
 
   it("should throw for invalid position counts", () => {
-    // Cant'be returned by Math.random. Should just test the error handling.
+    // Can't be returned by Math.random. Should just test the error handling.
     spy.mockReturnValue(1);
 
     expect(getRandomTake).toThrowError(

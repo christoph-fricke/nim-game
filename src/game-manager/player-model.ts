@@ -1,6 +1,6 @@
 import type { ActorRef } from "xstate";
 import { createEvent, EventFrom } from "xsystem";
-import type { GameDifficulty } from ".";
+import type { GameDifficulty } from "./game-manager-machine.model";
 import type { Pile } from "../nim";
 
 // Base events that players should handle to successfully communicate with the
@@ -9,8 +9,8 @@ import type { Pile } from "../nim";
 export type PlayerActor = ActorRef<PlayerEvent, unknown>;
 
 /**
- * A factory will be called by the game manager actor and should use XState's
- * spawn **action** to spawn players with a child-parent relationship.
+ * A factory which will be called by the game manager and should use XState's
+ * **spawn action** to spawn players with a child-parent relationship.
  */
 export type PlayerFactory = (config: {
   secret: string;
