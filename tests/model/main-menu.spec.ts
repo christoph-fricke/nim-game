@@ -3,7 +3,7 @@ import { GamePage } from "../game-page";
 import { test, expect } from "../test";
 import { createMainMenuMachine } from "./main-menu-machine";
 
-test.describe.only("Playing the Game", () => {
+test.describe("Main Menu", () => {
   const model = createTestModel(createMainMenuMachine());
 
   for (const path of model.getSimplePaths()) {
