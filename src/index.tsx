@@ -1,17 +1,16 @@
 import { StrictMode } from "react";
-import { render } from "react-dom";
+import { createRoot } from "react-dom/client";
 import { Game } from "./game";
 import { InspectorToggle, showInspector } from "./inspector/inspector";
 
 (async function main() {
   await showInspector();
 
-  const root = document.querySelector("#root");
-  render(
+  const root = createRoot(document.querySelector("#root")!);
+  root.render(
     <StrictMode>
       <Game />
       <InspectorToggle />
-    </StrictMode>,
-    root
+    </StrictMode>
   );
 })();

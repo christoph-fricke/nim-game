@@ -32,6 +32,7 @@ export interface SmartPlayerDependencies {
 export function createSmartPlayerMachine(deps: SmartPlayerDependencies) {
   return createMachine(
     {
+      predictableActionArguments: true,
       tsTypes: {} as import("./smart-player-machine.typegen").Typegen0,
       schema: {
         context: t<SmartPlayerContext>(),

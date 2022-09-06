@@ -2,15 +2,6 @@
 
 export interface Typegen0 {
   "@@xstate/typegen": true;
-  eventsCausingActions: {
-    saveGameState: "game.moves.request";
-    calculateMove:
-      | "xstate.after(2000)#RandomPlayer.Thinking"
-      | "game.moves.decline";
-    respondWithMove:
-      | "xstate.after(2000)#RandomPlayer.Thinking"
-      | "game.moves.decline";
-  };
   internalEvents: {
     "xstate.after(2000)#RandomPlayer.Thinking": {
       type: "xstate.after(2000)#RandomPlayer.Thinking";
@@ -24,9 +15,18 @@ export interface Typegen0 {
     guards: never;
     delays: never;
   };
+  eventsCausingActions: {
+    calculateMove:
+      | "game.moves.decline"
+      | "xstate.after(2000)#RandomPlayer.Thinking";
+    respondWithMove:
+      | "game.moves.decline"
+      | "xstate.after(2000)#RandomPlayer.Thinking";
+    saveGameState: "game.moves.request";
+  };
   eventsCausingServices: {};
   eventsCausingGuards: {};
   eventsCausingDelays: {};
-  matchesStates: "Idle" | "Thinking" | "SuggestingMove";
+  matchesStates: "Idle" | "SuggestingMove" | "Thinking";
   tags: never;
 }

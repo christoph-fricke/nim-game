@@ -25,6 +25,7 @@ export interface GameManagerDependencies {
 export function createGameManagerMachine(deps: GameManagerDependencies) {
   return createMachine(
     {
+      predictableActionArguments: true,
       tsTypes: {} as import("./game-manager-machine.typegen").Typegen0,
       schema: {
         context: t<GameMangerContext>(),

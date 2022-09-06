@@ -2,17 +2,6 @@
 
 export interface Typegen0 {
   "@@xstate/typegen": true;
-  eventsCausingActions: {
-    proxyGameStop: "human.stop_game";
-    saveGameState: "game.moves.request" | "game.moves.accept";
-    updateMove: "human.toggle_match";
-    clearMove:
-      | "human.toggle_match"
-      | "game.moves.accept"
-      | "game.moves.request"
-      | "game.moves.decline";
-    respondWithMove: "human.submit";
-  };
   internalEvents: {
     "xstate.init": { type: "xstate.init" };
   };
@@ -23,6 +12,17 @@ export interface Typegen0 {
     guards: never;
     delays: never;
   };
+  eventsCausingActions: {
+    clearMove:
+      | "game.moves.accept"
+      | "game.moves.decline"
+      | "game.moves.request"
+      | "human.toggle_match";
+    proxyGameStop: "human.stop_game";
+    respondWithMove: "human.submit";
+    saveGameState: "game.moves.accept" | "game.moves.request";
+    updateMove: "human.toggle_match";
+  };
   eventsCausingServices: {};
   eventsCausingGuards: {
     validPositionAndMoveNotFull: "human.toggle_match";
@@ -31,11 +31,11 @@ export interface Typegen0 {
   eventsCausingDelays: {};
   matchesStates:
     | "AwaitingRequest"
-    | "Playing"
-    | "Playing.NonSelected"
-    | "Playing.MoveSelected"
-    | "Playing.Submit"
     | "AwaitingResponse"
-    | { Playing?: "NonSelected" | "MoveSelected" | "Submit" };
+    | "Playing"
+    | "Playing.MoveSelected"
+    | "Playing.NonSelected"
+    | "Playing.Submit"
+    | { Playing?: "MoveSelected" | "NonSelected" | "Submit" };
   tags: "waiting";
 }

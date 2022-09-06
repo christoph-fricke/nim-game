@@ -2,22 +2,9 @@
 
 export interface Typegen0 {
   "@@xstate/typegen": true;
-  eventsCausingActions: {
-    setDifficulty: "game.change_difficulty";
-    applyHumanMoveToPile: "games.moves.play";
-    acceptHumanMove: "games.moves.play";
-    declineHumanMove: "games.moves.play";
-    applyComputerMoveToPile: "games.moves.play";
-    acceptComputerMove: "games.moves.play";
-    declineComputerMove: "games.moves.play";
-    stopPlayers: "xstate.init";
-    resetGame: "game.start";
-    spawnPlayers: "game.start";
-    requestHumanMove: "done.state.GameManager.Playing.ComputerMove";
-    requestComputerMove: "done.state.GameManager.Playing.HumanMove";
-  };
   internalEvents: {
     "xstate.init": { type: "xstate.init" };
+    "xstate.stop": { type: "xstate.stop" };
   };
   invokeSrcNameMap: {};
   missingImplementations: {
@@ -26,43 +13,64 @@ export interface Typegen0 {
     guards: never;
     delays: never;
   };
+  eventsCausingActions: {
+    acceptComputerMove: "games.moves.play";
+    acceptHumanMove: "games.moves.play";
+    applyComputerMoveToPile: "games.moves.play";
+    applyHumanMoveToPile: "games.moves.play";
+    declineComputerMove: "games.moves.play";
+    declineHumanMove: "games.moves.play";
+    requestComputerMove: "done.state.GameManager.Playing.HumanMove";
+    requestHumanMove:
+      | "done.state.GameManager.Playing.ComputerMove"
+      | "game.start";
+    resetGame: "game.start";
+    setDifficulty: "game.change_difficulty";
+    spawnPlayers: "game.start";
+    stopPlayers:
+      | "done.state.GameManager.Playing.ComputerMove"
+      | "done.state.GameManager.Playing.HumanMove"
+      | "game.stop"
+      | "games.moves.play"
+      | "xstate.stop";
+  };
   eventsCausingServices: {};
   eventsCausingGuards: {
     isDifficulty: "game.change_difficulty";
     matchesRemaining:
-      | "done.state.GameManager.Playing.HumanMove"
-      | "done.state.GameManager.Playing.ComputerMove";
-    validMoveFromHuman: "games.moves.play";
+      | "done.state.GameManager.Playing.ComputerMove"
+      | "done.state.GameManager.Playing.HumanMove";
+    moveFromComputer: "games.moves.play";
     moveFromHuman: "games.moves.play";
     validMoveFromComputer: "games.moves.play";
-    moveFromComputer: "games.moves.play";
+    validMoveFromHuman: "games.moves.play";
   };
   eventsCausingDelays: {};
   matchesStates:
+    | "HumanLost"
+    | "HumanWon"
     | "MainMenu"
     | "Playing"
-    | "Playing.HumanMove"
-    | "Playing.HumanMove.AwaitingMove"
-    | "Playing.HumanMove.FinishingMove"
     | "Playing.ComputerMove"
     | "Playing.ComputerMove.AwaitingMove"
     | "Playing.ComputerMove.FinishingMove"
-    | "HumanWon"
-    | "HumanLost"
+    | "Playing.HumanMove"
+    | "Playing.HumanMove.AwaitingMove"
+    | "Playing.HumanMove.FinishingMove"
     | {
         Playing?:
-          | "HumanMove"
           | "ComputerMove"
+          | "HumanMove"
           | {
-              HumanMove?: "AwaitingMove" | "FinishingMove";
               ComputerMove?: "AwaitingMove" | "FinishingMove";
+              HumanMove?: "AwaitingMove" | "FinishingMove";
             };
       };
   tags:
-    | "main_menu"
-    | "playing"
-    | "human_move"
     | "computer_move"
+    | "human_lost"
+    | "human_move"
     | "human_won"
-    | "human_lost";
+    | "main_menu"
+    | "playing";
 }

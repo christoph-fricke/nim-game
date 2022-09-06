@@ -24,6 +24,7 @@ export interface RandomPlayerDependencies {
 export function createRandomPlayerMachine(deps: RandomPlayerDependencies) {
   return createMachine(
     {
+      predictableActionArguments: true,
       tsTypes: {} as import("./random-player-machine.typegen").Typegen0,
       schema: {
         context: t<RandomPlayerContext>(),

@@ -25,6 +25,7 @@ export interface HumanPlayerDependencies {
 export function createHumanPlayerMachine(deps: HumanPlayerDependencies) {
   return createMachine(
     {
+      predictableActionArguments: true,
       tsTypes: {} as import("./human-player-machine.typegen").Typegen0,
       schema: {
         context: t<HumanContext>(),
