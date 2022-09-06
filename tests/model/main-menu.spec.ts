@@ -17,11 +17,9 @@ test.describe("Main Menu", () => {
             await expect(game.gameHeader).toBeVisible();
           },
           MediumDifficulty: async () => {
-            await expect(game.gameHeader).toBeVisible();
             await expect(game.difficulty).toHaveValue("medium");
           },
           ExtremeDifficulty: async () => {
-            await expect(game.gameHeader).toBeVisible();
             await expect(game.difficulty).toHaveValue("extreme");
           },
           Playing: async () => {

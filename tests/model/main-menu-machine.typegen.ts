@@ -17,9 +17,11 @@ export interface Typegen0 {
   eventsCausingGuards: {};
   eventsCausingDelays: {};
   matchesStates:
-    | "ExtremeDifficulty"
-    | "MainMenu"
-    | "MediumDifficulty"
-    | "Playing";
+    | "Main Menu"
+    | "Main Menu.Extreme Difficulty"
+    | "Main Menu.Hist"
+    | "Main Menu.Medium Difficulty"
+    | "Playing"
+    | { "Main Menu"?: "Extreme Difficulty" | "Medium Difficulty" };
   tags: never;
 }
