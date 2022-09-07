@@ -23,72 +23,85 @@ export interface HumanPlayerDependencies {
 }
 
 export function createHumanPlayerMachine(deps: HumanPlayerDependencies) {
+  /** @xstate-layout N4IgpgJg5mDOIC5QAkCuBbAhgOwAoBtMBPMAJwDoBBAd0wEsAXO7KAJTAEdU4GBiKTOjDl0AewBuccqU7dYDRKAAOo2IzqjsikAA9EARgDsATnIAWY4YAcAZisAmewAYAbPuMuXAGhBFEhl1M3e2N9AFYrJ0Mw-TN7AF94nzQsPEISCgJiZihyADlNAGUwfDAAYwZIXgALDBxyBlEoKFKAfSwGMurtFTUmTW09BDDQ8hirMzMnezCbG319Kx8-BAWwp3JXM0MnG0NYo30XROS6tOIyciyiHPIAWQkwYtKKqtrU8lhUACN0Rh7VOoBkhdAYnFZDORjDYzBMbCEJtFDMsweCoS4YWEws4djY3CcQCkcNdLtdbg9JM9ypUIDUzg0mi0wO1MJ1uiDekCtCChmF9uQXDF7JNMXioiiEFZjPZyHiIlZbOFBYZDASiecMld0jleBBNMJ5KzhOqSZltSwAX0NNzQEN7HjzPbEdtovMnGYJfppi5yPZwjZpnEolZZmqzqaqLR1Cx2LAVNhYGB+IJhGJJLByJgymUwEoFBzAf0baCEABaDbC7FOBYuXHhKz6YUSqUy2su2FOWZmTxh1IRmj0JgxuDxxPJoQiR4ZiDlfDMMCWrmDMGQlyOSLuSydixhT3hDZbXH7MyHY5JQnh9JkOkfeSiJStARCRdF5cIKZjJzGaZhFzV6ZRMiviIH++hQtEnYLFKgTzIk57YKIM7wCCJpXhQA7Rmwsg8C+1pvlYAp7CMWLSm4KpmDYErWDY5ALCEJ7QoKHiqueqEXGa2QsPkRQlNSkC4cCtqICeYGwkY9h-rWUohp6ThyeimJYsEX5nqcfZoVqnG5BSTy8a8EACcWQzQq2gSOCeEnGNK9iybs5gYmYWK-o2Km9sSGlklxhQ-H8+bKIWeE8gYwoyvoeyWDYoRuF2EqWJC3aYjsxgjPirGXuxmk3BaBZWoJJZ2PFDaGBJrjWMYMnAQgASmHKxjdnF9iGJFbkapcGFDlhcaaImhlvjRRieIKyr2liuyyc4vr+lE5U2BETUtaavVBWWwq+o5zg1nWEQSoEkK1bssRNSqNhwfEQA */
   return createMachine(
     {
-      predictableActionArguments: true,
+      context: getInitialContext(),
       tsTypes: {} as import("./human-player-machine.typegen").Typegen0,
       schema: {
         context: t<HumanContext>(),
         events: t<PlayerEvent | HumanEvent>(),
       },
+      predictableActionArguments: true,
       id: "HumanPlayer",
-      context: getInitialContext(),
       initial: "AwaitingRequest",
       on: {
-        "human.stop_game": { internal: true, actions: "proxyGameStop" },
+        "human.stop_game": {
+          actions: "proxyGameStop",
+        },
       },
       states: {
         AwaitingRequest: {
           tags: "waiting",
           on: {
             "game.moves.request": {
-              target: "Playing",
               actions: "saveGameState",
+              target: "Playing",
             },
           },
         },
         Playing: {
-          initial: "NonSelected",
           entry: "clearMove",
-          onDone: "AwaitingResponse",
+          initial: "NonSelected",
           states: {
             NonSelected: {
               on: {
                 "human.toggle_match": {
-                  target: "MoveSelected",
-                  cond: "validPositionAndMoveNotFull",
                   actions: "updateMove",
+                  cond: "validPositionAndMoveNotFull",
+                  target: "MoveSelected",
                 },
               },
             },
             MoveSelected: {
               on: {
-                "human.submit": "Submit",
+                "human.submit": {
+                  target: "Submit",
+                },
                 "human.toggle_match": [
                   {
-                    target: "NonSelected",
-                    cond: "willEmptyMove",
                     actions: "clearMove",
+                    cond: "willEmptyMove",
+                    target: "NonSelected",
                   },
                   {
-                    target: "MoveSelected",
-                    cond: "validPositionAndMoveNotFull",
                     actions: "updateMove",
+                    cond: "validPositionAndMoveNotFull",
+                    target: "MoveSelected",
+                    internal: false,
                   },
                 ],
               },
             },
-            Submit: { type: "final", entry: "respondWithMove" },
+            Submit: {
+              entry: "respondWithMove",
+              type: "final",
+            },
+          },
+          onDone: {
+            target: "AwaitingResponse",
           },
         },
         AwaitingResponse: {
           tags: "waiting",
           on: {
             "game.moves.accept": {
-              target: "AwaitingRequest",
               actions: ["saveGameState", "clearMove"],
+              target: "AwaitingRequest",
             },
-            "game.moves.decline": "Playing",
+            "game.moves.decline": {
+              target: "Playing",
+            },
           },
         },
       },

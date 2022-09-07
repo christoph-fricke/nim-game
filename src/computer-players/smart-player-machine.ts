@@ -30,39 +30,42 @@ export interface SmartPlayerDependencies {
 }
 
 export function createSmartPlayerMachine(deps: SmartPlayerDependencies) {
+  /** @xstate-layout N4IgpgJg5mDOIC5QGUC2BDATgFwAoBt0BPMTAOgEkJ8wBiKdVMM1AewDc4zMwBHAVzjZEoAA6tYAS2yTWAOxEgAHogCMAVgAcZTetW7VAFgAMATgBsmzQCYA7ABoQRRNeumyh0182Xzt24ZGAL5BjmhYeIQk5AAqABaScgDWiVC0SrDY6NjM6ABmOZgAFNbGZQCUtOE4BMSkZPGJKXJQiuJSMvKKKgiexmTm5oa2pabGAMzmY4aOzgjWhtpe3prG5hqa48aaIWEYNVH1yPxQMJmpALIcdAxMLNewZOgAxs9gosJIIO3SsgpfPXG42sZFU1nGql8hks6msqlmams5jIEP8qmMsNKhi25l2IGqkTq5GOpyEl2u9EYzDYnEeEDAz3wiTAbQkvy6AMQtmMhjIxnB41sgyMxls41MCIQRnUOlUaLlG00w0MIVCIDkrHp8C+BNq0Uo1BZXx+nX+oB6AVBQsMcKMpiMNvMkoW4z5ZTKm3UlntYrxusOsQSyVSrI6f26iEm7mmJlsY1cQolThc2Ld7s93rl4z9+0J+pJZxkLSunFD7LNykQ5nFHkFniG+mVSbmqi8HmW3vMxlUkLWOYietIZdNEYQ6n6cqGts8DqRkvUvNRU3Gqxs6lM2PUqqCQA */
   return createMachine(
     {
-      predictableActionArguments: true,
+      context: getInitialContext(),
       tsTypes: {} as import("./smart-player-machine.typegen").Typegen0,
-      schema: {
-        context: t<SmartPlayerContext>(),
-        events: t<PlayerEvent>(),
-      },
+      schema: { context: t<SmartPlayerContext>(), events: t<PlayerEvent>() },
+      predictableActionArguments: true,
       id: "SmartPlayer",
       initial: "Idle",
-      context: getInitialContext(),
       states: {
         Idle: {
           on: {
             "game.moves.request": {
-              target: "Thinking",
               actions: "saveGameState",
+              target: "Thinking",
             },
           },
         },
         Thinking: {
           after: {
-            2000: "SuggestingMove",
+            "2000": {
+              target: "SuggestingMove",
+            },
           },
         },
         SuggestingMove: {
           entry: ["calculateMove", "respondWithMove"],
           on: {
             "game.moves.accept": {
-              target: "Idle",
               actions: "updatePrevFree",
+              target: "Idle",
             },
-            "game.moves.decline": "SuggestingMove",
+            "game.moves.decline": {
+              target: "SuggestingMove",
+              internal: false,
+            },
           },
         },
       },

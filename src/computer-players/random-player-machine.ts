@@ -22,36 +22,41 @@ export interface RandomPlayerDependencies {
 }
 
 export function createRandomPlayerMachine(deps: RandomPlayerDependencies) {
+  /** @xstate-layout N4IgpgJg5mDOIC5QCUCGA7CB7AtgBQBtUBPMAJwDoBJCAsAYilRzApywDc4KywBHAK5wALolAAHLLACWw6VnRiQAD0QBGACwaKABgCcegOwAOAGzHjmvRp3GANCGKIATPooGDAZlvHPh5-6GAL5BDmiYuIQk5BQAKgAW0ugA1klQ9MqwwqjCrKgAZrlkABSuOjoAlPTh2PhEpJQJSanoUEqSMnIKSqoIGta6ns5DGgCseqMapnoOTgjOznoU-V6uhoaj5nqeIWEYtVENFADKAlAwWWkAspwMTCxst7AUqADGr2DiokggHbLyih+vSGamWejUi22pkMelczlm6mcpgoEP0Qz00z8WlGuxANUi9Rip3OImut0YzFY7C4zwgYFeBCSYHaUn+3SBiEMak8FFMNg8Fk0ZjUCIQEORqO2i0xhmxIVCIHQWDp8B++Lq0UoNDoLM6AJ6iFGowocO2nj0xlGnm8OkMooWPJWE2G-mM61MOwV6sOMSaKTSurZgNAwPGJv8Rs8kw9plMOlG9uGYIMoxdzjdhlMuO9hMoxIuclaNy4ga6wZUiA9Sw0fitanjo1sOnhjnUMPcHg06YWmg0amz+wJmtL+o5CE8oNN1otVptdtbCEmKNc1lM9bUHu8-flQA */
   return createMachine(
     {
-      predictableActionArguments: true,
+      context: getInitialContext(),
       tsTypes: {} as import("./random-player-machine.typegen").Typegen0,
-      schema: {
-        context: t<RandomPlayerContext>(),
-        events: t<PlayerEvent>(),
-      },
+      schema: { context: t<RandomPlayerContext>(), events: t<PlayerEvent>() },
+      predictableActionArguments: true,
       id: "RandomPlayer",
       initial: "Idle",
-      context: getInitialContext(),
       states: {
         Idle: {
           on: {
             "game.moves.request": {
-              target: "Thinking",
               actions: "saveGameState",
+              target: "Thinking",
             },
           },
         },
         Thinking: {
           after: {
-            2000: "SuggestingMove",
+            "2000": {
+              target: "SuggestingMove",
+            },
           },
         },
         SuggestingMove: {
           entry: ["calculateMove", "respondWithMove"],
           on: {
-            "game.moves.accept": "Idle",
-            "game.moves.decline": "SuggestingMove",
+            "game.moves.accept": {
+              target: "Idle",
+            },
+            "game.moves.decline": {
+              target: "SuggestingMove",
+              internal: false,
+            },
           },
         },
       },
