@@ -3,8 +3,8 @@
 export interface Typegen0 {
   "@@xstate/typegen": true;
   internalEvents: {
-    "xstate.after(2000)#SmartPlayer.Thinking": {
-      type: "xstate.after(2000)#SmartPlayer.Thinking";
+    "xstate.after(thinking)#SmartPlayer.Thinking": {
+      type: "xstate.after(thinking)#SmartPlayer.Thinking";
     };
     "xstate.init": { type: "xstate.init" };
   };
@@ -18,16 +18,18 @@ export interface Typegen0 {
   eventsCausingActions: {
     calculateMove:
       | "game.moves.decline"
-      | "xstate.after(2000)#SmartPlayer.Thinking";
+      | "xstate.after(thinking)#SmartPlayer.Thinking";
     respondWithMove:
       | "game.moves.decline"
-      | "xstate.after(2000)#SmartPlayer.Thinking";
+      | "xstate.after(thinking)#SmartPlayer.Thinking";
     saveGameState: "game.moves.request";
     updatePrevFree: "game.moves.accept";
   };
   eventsCausingServices: {};
   eventsCausingGuards: {};
-  eventsCausingDelays: {};
+  eventsCausingDelays: {
+    thinking: "game.moves.request";
+  };
   matchesStates: "Idle" | "SuggestingMove" | "Thinking";
   tags: never;
 }

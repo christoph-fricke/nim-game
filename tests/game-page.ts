@@ -16,6 +16,13 @@ export class GamePage {
     }, takes);
   }
 
+  /** Changes the thinking speed of computer players. */
+  public downloadMoreCPU(thinkingDelay: number) {
+    return this.page.evaluate((delay: number) => {
+      window.thinkingDelay = delay;
+    }, thinkingDelay);
+  }
+
   readonly gameHeader = this.page.locator('h1 >> text="Nim - The Game"');
   readonly difficulty = this.page.locator(
     '*css=label >> text="Computer Difficulty:"'

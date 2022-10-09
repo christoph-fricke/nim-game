@@ -27,10 +27,11 @@ function getInitialContext(): SmartPlayerContext {
 export interface SmartPlayerDependencies {
   /** The `secret` is provided by the game manager to verify moves from this actor. */
   secret: string;
+  thinkingDelay: number;
 }
 
 export function createSmartPlayerMachine(deps: SmartPlayerDependencies) {
-  /** @xstate-layout N4IgpgJg5mDOIC5QGUC2BDATgFwAoBt0BPMTAOgEkJ8wBiKdVMM1AewDc4zMwBHAVzjZEoAA6tYAS2yTWAOxEgAHogCMAVgAcZTetW7VAFgAMATgBsmzQCYA7ABoQRRNeumyh0182Xzt24ZGAL5BjmhYeIQk5AAqABaScgDWiVC0SrDY6NjM6ABmOZgAFNbGZQCUtOE4BMSkZPGJKXJQiuJSMvKKKgiexmTm5oa2pabGAMzmY4aOzgjWhtpe3prG5hqa48aaIWEYNVH1yPxQMJmpALIcdAxMLNewZOgAxs9gosJIIO3SsgpfPXG42sZFU1nGql8hks6msqlmams5jIEP8qmMsNKhi25l2IGqkTq5GOpyEl2u9EYzDYnEeEDAz3wiTAbQkvy6AMQtmMhjIxnB41sgyMxls41MCIQRnUOlUaLlG00w0MIVCIDkrHp8C+BNq0Uo1BZXx+nX+oB6AVBQsMcKMpiMNvMkoW4z5ZTKm3UlntYrxusOsQSyVSrI6f26iEm7mmJlsY1cQolThc2Ld7s93rl4z9+0J+pJZxkLSunFD7LNykQ5nFHkFniG+mVSbmqi8HmW3vMxlUkLWOYietIZdNEYQ6n6cqGts8DqRkvUvNRU3Gqxs6lM2PUqqCQA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QGUC2BDATgFwAoBt0BPMTAOgEkJ8wBiKdVMM1AewDc4zMwBHAVzjZEoAA6tYAS2yTWAOxEgAHogCMAVgAcZTetW7VAFgAMATgBsmzQCYA7ABoQRRNeumyh0182Xzt24ZGAL5BjmhYeIQk5AAqABaScgDWiVC0SrDY6NjM6ABmOZgAFNgJyakAlLThOATEpGTxiSlyUIriUjLyiioIhubmZKoaqqZ65vqm1gDM5o7OCNPDZNaeFpoWxsPmxuYhYRi1UQ3I-FAwmakAshx0DEwst7Bk6ADGr2CiwkggHdKyCh+vWm02sQxmql8-V01lU8zU1kGS38qmM6lcxkM012+xANUi9XIp3OQmut3ojGYbE4zwgYFe+ESYHaEn+3SBiFsmLIxhm01sAyMxls01M8IQRnUOlUKJlGishgCIVCIDkrDp8B++Lq0Uo1GZPz+XUBoF6ASGAsMsKMpiMVrmThcWJ5xldxk003UlltItx2uOsTKLTahtZxp6iFm7lMmJMthjrgFYsdCFW0xdbo9Xo2MumfsOBN1xIuMlaN04LM6AIjCHMoo8-M85kCmkVnnFo3ca3Wm22OJV-sJlbZJuUiHUxgtzetnjtiPF6kMZGRIp8U2GelsyqCQA */
   return createMachine(
     {
       context: getInitialContext(),
@@ -50,7 +51,7 @@ export function createSmartPlayerMachine(deps: SmartPlayerDependencies) {
         },
         Thinking: {
           after: {
-            "2000": {
+            thinking: {
               target: "SuggestingMove",
             },
           },
@@ -71,6 +72,9 @@ export function createSmartPlayerMachine(deps: SmartPlayerDependencies) {
       },
     },
     {
+      delays: {
+        thinking: () => deps.thinkingDelay,
+      },
       actions: {
         saveGameState: assign((_, e) => ({
           freePositions: getFreePositions(e.pile),
