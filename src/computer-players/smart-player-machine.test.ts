@@ -24,12 +24,13 @@ function buildPile() {
   return pile;
 }
 
-describe("Random Player Actor", () => {
+describe("Smart Player Actor", () => {
   let deps: DeepMockProxy<SmartPlayerDependencies>;
 
   beforeEach(() => {
     deps = mockDeep<SmartPlayerDependencies>({
       secret: "comm-secret",
+      thinkingDelay: 2000,
     });
   });
 
@@ -52,6 +53,24 @@ describe("Random Player Actor", () => {
     actor.send(requestMove(pile));
 
     clock.increment(1999);
+    expect(parent.send).not.toBeCalled();
+
+    clock.increment(1);
+    expect(parent.send).toBeCalledTimes(1);
+  });
+
+  it("should change it thinking speed based on the provided delay", () => {
+    deps.thinkingDelay = 1; // <-- Changed delay
+    const parent = mockDeep<AnyInterpreter>();
+    const clock = new SimulatedClock();
+    const actor = interpret(createSmartPlayerMachine(deps), {
+      clock,
+      parent,
+    }).start();
+
+    const pile = buildPile();
+    actor.send(requestMove(pile));
+
     expect(parent.send).not.toBeCalled();
 
     clock.increment(1);

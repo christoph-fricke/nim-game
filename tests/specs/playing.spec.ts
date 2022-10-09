@@ -5,14 +5,11 @@ test.describe.parallel("Given a computer at medium difficulty", () => {
   test("When the computer takes the last match, a win screen is shown", async ({
     page,
   }) => {
-    test.slow(
-      true,
-      "Plays against computers which require 2s each turn to think."
-    );
     const game = new GamePage(page);
 
     await game.goto();
     await game.useSomeLuck(3);
+    await game.downloadMoreCPU(1);
 
     await expect(game.difficulty).toHaveValue("medium");
     await game.startBtn.click();
@@ -44,14 +41,11 @@ test.describe.parallel("Given a computer at medium difficulty", () => {
   test("When the user takes the last match, a lose screen is shown", async ({
     page,
   }) => {
-    test.slow(
-      true,
-      "Plays against computers which require 2s each turn to think."
-    );
     const game = new GamePage(page);
 
     await game.goto();
     await game.useSomeLuck(3);
+    await game.downloadMoreCPU(1);
 
     await expect(game.difficulty).toHaveValue("medium");
     await game.startBtn.click();
@@ -84,13 +78,10 @@ test.describe.parallel("Given a computer at extreme difficulty", () => {
   test("When the user makes a move, the computer counters the move", async ({
     page,
   }) => {
-    test.slow(
-      true,
-      "Plays against computers which require 2s each turn to think."
-    );
     const game = new GamePage(page);
 
     await game.goto();
+    await game.downloadMoreCPU(1);
     await game.selectDifficulty("extreme");
 
     await game.startBtn.click();
