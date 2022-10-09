@@ -115,7 +115,7 @@ test.describe.parallel("Given the user plays a game", () => {
     let expectMatchState = () =>
       Promise.all(
         expectedState.map((match, i) =>
-          game.expectState(game.match(i as Position), match)
+          expect(game.match(i as Position)).toHaveState(match)
         )
       );
 
