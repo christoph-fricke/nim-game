@@ -19,6 +19,7 @@ describe("Random Player Actor", () => {
   beforeEach(() => {
     deps = mockDeep<RandomPlayerDependencies>({
       secret: "comm-secret",
+      thinkingDelay: 2000,
     });
     deps.getRandomTake.mockReturnValue(1);
   });
@@ -42,6 +43,24 @@ describe("Random Player Actor", () => {
     actor.send(requestMove(pile));
 
     clock.increment(1999);
+    expect(parent.send).not.toBeCalled();
+
+    clock.increment(1);
+    expect(parent.send).toBeCalledTimes(1);
+  });
+
+  it("should change it thinking speed based on the provided delay", () => {
+    deps.thinkingDelay = 1; // <-- Changed delay
+    const parent = mockDeep<AnyInterpreter>();
+    const clock = new SimulatedClock();
+    const actor = interpret(createRandomPlayerMachine(deps), {
+      clock,
+      parent,
+    }).start();
+
+    const pile = createPile();
+    actor.send(requestMove(pile));
+
     expect(parent.send).not.toBeCalled();
 
     clock.increment(1);
