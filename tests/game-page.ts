@@ -1,6 +1,5 @@
-import type { Locator, Page } from "@playwright/test";
-import { expect } from "./test";
-import type { Match, Position } from "../src/nim";
+import type { Page } from "@playwright/test";
+import type { Position } from "../src/nim";
 
 export class GamePage {
   constructor(private readonly page: Page) {}
@@ -56,13 +55,6 @@ export class GamePage {
     return this.page.locator(
       `button[role="listitem"][aria-label="Match ${position + 1}"]`
     );
-  }
-
-  public expectState(match: Locator, state: Match | "selected") {
-    // Ideally, this would by extending expect instead. However I did not figure
-    // out how to do it with TS in a way that feels "native" to Playwright.
-    // https://playwright.dev/docs/api/class-test#test-extend and the web did not help...
-    return expect(match).toHaveAttribute("data-state", state);
   }
 
   public selectDifficulty(difficulty: "medium" | "extreme") {
