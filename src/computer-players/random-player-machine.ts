@@ -23,7 +23,7 @@ export interface RandomPlayerDependencies {
 }
 
 export function createRandomPlayerMachine(deps: RandomPlayerDependencies) {
-  /** @xstate-layout N4IgpgJg5mDOIC5QCUCGA7CB7AtgBQBtUBPMAJwDoBJCAsAYilRzApywDc4KywBHAK5wALolAAHLLACWw6VnRiQAD0QBGACwaKABgCcegOwAOAGzHjmvRp3GANCGKIATPooGDAZlvHPh5-6GAL5BDmiYuIQk5BQAKgAW0ugA1klQ9MqwwqjCrKgAZrlkABTCiSlpAJT04dj4RKSUCUmp6FBKkjJyCkqqCBqGAKwUanqDzsaGhp6eg6ZzDk4Izs56FBoexl6r04amIWEYdVGNFADKAlAwWWkAspwMTCxsD7AUqADGH2DiokggnVk8kU-z6nmcanWejUqz0nlMhj0rmci3UzlMI1ccNWpjhhi0gwOIFqkQaMQuVxEdwejGYrHYXDeEDAHwISTAHSkQJ6oMQhjUngophsm0sGjMalRCBhGJh+nBelxfgJIVCIHQWGZ8H+JPq0UoNDonK6wN6iEGw2RcM8emMgxmOh0hilK0FGwM4z8Eympk8RN1JxizQqbWN3JBoDBgzWAWcFtmGl9plMOkGLucbo8nv8kz2-qOpP150u1zkbXuXDD3QjKkQvrWGj89rUqcGth0KMc6kR7g8GgmK00GjU+YiesaVdNvIQnkhVpmtvt3idUsG2jl0OHW3BvuCqqAA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QCUCGA7CB7AtgBQBtUBPMAJwDoBJCAsAYilRzApywDc4KywBHAK5wALgG0ADAF1EoAA5ZYAS2GKs6GSAAeiAIwBmAOwVxAFgBsZgBx6AnJYCsevePGWANCGKIATC4rf7AwMzE0sDbzDgvQBfaI80TFxCEnIKABUAC0V0AGtsqHpNWGFUYVZUADMysgAKYSzc-IBKegTsfCJSSkzsvPQoCWkkEHklFTUNbQQTAxMKA30bexsDGzM9Cw8vBG9vPQoTGyP7PfDIs1j4jHbkrooAZQEoGGL8gFlOBiYWNk-YClQAGNAWBZGIpBpRspVOphlMTKEDuslis1hszFtdHodBQjkcTBFdjoETpLiA2klOqlHs8RO9PoxmKx2Fx-hAwICCNkwINIQpoRM4YgDH4dEdvIdLOJ7K5xN5MQh9Di8TYCZYiSTYnEQOgsOz4MMKR0UpQaHQ+WMYZNEPZ7P45TYnHZHM5xAYFbt9odjqcIkF1mSjbdUj1Gv0LQLYaApnplv5wrbY+Z0dKPXsDniToY-cFA9dKSaHk8Xip+h8uBHxlGtIh1nb7OYbOIzNKZVL5Z5dA5cZnfZFAnnEsaupWrUKEEZfN5HbYHE4XO7O9NvD38YTvMSTDpSVqgA */
   return createMachine(
     {
       context: getInitialContext(),
@@ -36,15 +36,17 @@ export function createRandomPlayerMachine(deps: RandomPlayerDependencies) {
         Idle: {
           on: {
             "game.moves.request": {
-              actions: "saveGameState",
               target: "Thinking",
+              actions: "saveGameState",
             },
           },
         },
         Thinking: {
           after: {
             thinking: {
-              target: "SuggestingMove",
+              target: "#RandomPlayer.SuggestingMove",
+              actions: [],
+              internal: false,
             },
           },
         },

@@ -23,7 +23,7 @@ export interface GameManagerDependencies {
 }
 
 export function createGameManagerMachine(deps: GameManagerDependencies) {
-  /** @xstate-layout N4IgpgJg5mDOIC5QHECGBbMBZVA7VMATgHQ4CWuWYuArgMRQZjGwAuqhrioADgPawyrMn1zcQAD0QBWAEzEAHAoBsCgAwB2ZQE4NagMwAWbduUAaEAE9EujcTWy1ahRsMLj0lQF8vFtJhx8IlJUCipaBiZiAGMACzwYAH0IMgAzVLJomgAbVmskEH5BYVFxKQQAWllZfWIARjq1QzVtB1kFT20LfOU3RQ065S0FR1a5Hz8mQIIwEgAFbNRLCihiAAkadDwsPgA3ZgBBAHdQ4VwoHf3IzFhidD24Yh5F-N4BIRExAvLm+TdDZraQz6IyaIzdRAqeQOJyGaTKZT6FrafQTED+bB4GbzF4rdabbYPOgQUTMNioVjMDHTYILJZ4jZbSgPcRFD6lb42Op2EYKbnaRqmZp1CEIUzKYj6aQgkzS+GeOpo6lY2m487EADCfHQPBolMIl0OJw+50N10e932t2eS1Z7xKX1A5TqUoUxA00jUdVkdSBzkRGlFKkMxDksPhiORqN86KmKtmxDpy3VWp1etmZpJuDJ7EpxGVQQTSbxqd1+sNduKnzKXJ57X5gt6XtFGm08lkpmkcncwOUgyVccLOPp53NLFYfB4lfZjskiGUshb+jqxFUCLbKg3dUMA4C8ZIjLwAHVRGPyZxpw6awhagM1AukYZVPDl7JzFZEN7W-ZnCZZBo3wRaQdxjAtsXxJkABkBFYM92AvAo2SvTkEEcd0ARldw+wXIFDFFb1fWIXDmnUNwoR8GNcD4CA4HEMDgnIShqBoS9qxQip4VDBR9HaKUeI0BRtG46Qg1kaR0KGPR71cBENF3TEh0TNVVkPZl9mIY5ThWCtEPtNinUQWRjEUYEPXaQwBI9BRRV0FcYTUMN7xaYD5JpItlIgwl1IAMQoMhYFibSWV0qsOQMhAdDUUM6nhQw6l5KVAw-MU9FDRxNHihoNGy1z9yUkcVIJNSwFYsK51QsSTP0Mz3Eszwl20exfSE0xWjcaNJj3RTixTbUywzB4NONM4LmCt5QtnZ1HAlQUnzlaUeJsjRakc10jKEjtcu6jzS3TA1Bt83B-MC00xsKPSyudWT3QMf99BUB8LKW2p7IGPluRy0DB3AnrVl28szqQ-TyoaEZ6haOapQWxdktcFdHKGbRPXcLafuU0rJsMr0qpqiyXHq5LgJDL0TClHRW2yxUvq68DVJPWcgcuz8vTdPs4Q+r0ePhfC7p-QSBR45xTNR4JVOgtgMevVpGoE5R4Q9YCnD7HnvVDJs4SEwxAOUEXZkl9ijLsBomhaNoOkE0ULOhX0lH+AFW1kCivCAA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QHECGBbMBZVA7VMATgHQ4CWuWYuArgMRQZjGwAuqhrA2gAwC6iUAAcA9rDKsyI3IJAAPRAE5iAdhUAWTQCYtKgKzq9RlQBoQAT0QBaAIw31xHuoDM6gBw2ePLa72KVAL4BZmiYOPhEpKgUVLQMTMQAxgAWeDAA+hBkAGbZZIk0ADas5rwCSCCi4pLSsgoIVlruxABsis56PG5aNnpuzs5u6maWDbp6xHodnYq9bjwtLYHBIKHYeARgJAAKhajmFFDEABI06HhYIgBuzACCAO7RkrhQlzfxmLDE6NdwxEJ7Ur8WRVCRSGQVerqLTKZyzRReNyzPRaFrOEbWTzEXQImxo3q6RYdIIhJjhTY7QGHE5nC6-YgPJ6HN5gD5-H43L4A-ZcGzlYRiMG1SGIaEtVR+Lr9ZGo9EWRB2NzERR6ewolzqFQ+ZwtEmrMkbSK7fbU07nSi-OgQaTMNioVjMNbko1Ul4080ssogwU1CGgeqeNrEDqGLQo1wtTQYhqRxwqHgqNE8BGJpxuPVOw1bYjGg5us1097W3C29gO4iZiLZ3Om2kWm68-mVH3guoKhM8ZXqbwIxRoiNuaMOQZNaE8Gxw9SRpoZg1Vykmt0AYRE6CENAdhBZDMeYJeLLZXw5f25QKboN9bYQNg0yiaiecqLDehaNi00dsWmIbjcRlfqoMTUp2cWcwizBc8yOFc1w3LZt0ZPdXktRhPm+X4uUBRtvWqVsRWvDRxVfdwtHHZ9X3feVrx6SY+nHWZIxVOEQJWSsKRzV0oNXddNwPYtS3tR05zYmtly42Ct1+L0KgvXD-QVHwVGIewvB4AZ1DfPRTEovxvz6F91EUdxH2hZjSTA+d2MXTiYJ4y0+JYMtBPM4SOOIaDuLgyS+WwoU-XkeTfy7FQJyaBYVG6CjRjfZxgxUDo8ScJpOiRUD1gskSoDZByRCEKSBRw4U5OvTsbHmNodH0QxjA-AzJn6FwbxvQktXUVLnWzAtcAAdWkLK7U4PLmwKvz6hVRS-H0RQpo6Nx9EHSimJozwfwnG95hcNrwPdPAABkxFYPr2AG4FpJbQr-IQMbJn8Pxpr6SbozU79oUUHQWnHcK4SCFZcBECA4FkVjInIShqBoHzLzw2xaq6dSBh6PoBiGD9ekUuwEVRIZxymVTNvS1zOvg3dniQm4Idki6wwcLUmJ6dSUTRaNUVUHgpj6FohhpnU9DxlyrO2+tmAAMQoMhYGSZlfnJ876m6GKvDfJFZpIhM9CZ8USLZtwOc1bUWh5lihJdfnCal07hqvEjxRp9o6YJRnKOhxScXHfEUUTSNeeNyC3LE2ybh3Jl9zN-LfKvVHxVUxYFdero1coppHEUFbXCGIww2cZYzLSvmffc8TtxF3AxYl4OyfNsO8IRmK0SMbtNdeqYmZivwU-cKqM6z-VnO96l8-9sBpZGhUUSVKP3rokjfxR2qfyMfonCMBMwy96sOKH8O+lUHxbfse25VGKxXE7Oe-EAtpDNZ1eSE6nq-JkmWFQGTtl5C7slgix7XGemE3o+6Vr4Cz2mwDeeE7B4iUroFQvZ+xTnmqMJ6Qxf6on-l9Q2PctigKKo0PsrR2jJQRv0QYwxHYvW-L+PwHR9b-gNkEIAA */
   return createMachine(
     {
       context: getInitialContext(),
@@ -43,8 +43,8 @@ export function createGameManagerMachine(deps: GameManagerDependencies) {
               target: "Playing",
             },
             "game.change_difficulty": {
-              actions: "setDifficulty",
               cond: "isDifficulty",
+              actions: "setDifficulty",
             },
           },
         },
@@ -63,14 +63,14 @@ export function createGameManagerMachine(deps: GameManagerDependencies) {
                   on: {
                     "games.moves.play": [
                       {
-                        actions: ["applyHumanMoveToPile", "acceptHumanMove"],
-                        cond: "validMoveFromHuman",
                         target: "FinishingMove",
+                        cond: "validMoveFromHuman",
+                        actions: ["applyHumanMoveToPile", "acceptHumanMove"],
                       },
                       {
-                        actions: "declineHumanMove",
-                        cond: "moveFromHuman",
                         target: "AwaitingMove",
+                        cond: "moveFromHuman",
+                        actions: "declineHumanMove",
                         internal: false,
                       },
                     ],
@@ -82,8 +82,8 @@ export function createGameManagerMachine(deps: GameManagerDependencies) {
               },
               onDone: [
                 {
-                  cond: "matchesRemaining",
                   target: "ComputerMove",
+                  cond: "matchesRemaining",
                 },
                 {
                   target: "#GameManager.HumanLost",
@@ -99,17 +99,17 @@ export function createGameManagerMachine(deps: GameManagerDependencies) {
                   on: {
                     "games.moves.play": [
                       {
+                        target: "FinishingMove",
+                        cond: "validMoveFromComputer",
                         actions: [
                           "applyComputerMoveToPile",
                           "acceptComputerMove",
                         ],
-                        cond: "validMoveFromComputer",
-                        target: "FinishingMove",
                       },
                       {
-                        actions: "declineComputerMove",
-                        cond: "moveFromComputer",
                         target: "AwaitingMove",
+                        cond: "moveFromComputer",
+                        actions: "declineComputerMove",
                         internal: false,
                       },
                     ],
@@ -121,8 +121,8 @@ export function createGameManagerMachine(deps: GameManagerDependencies) {
               },
               onDone: [
                 {
-                  cond: "matchesRemaining",
                   target: "HumanMove",
+                  cond: "matchesRemaining",
                 },
                 {
                   target: "#GameManager.HumanWon",

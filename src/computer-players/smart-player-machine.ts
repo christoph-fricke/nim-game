@@ -31,7 +31,7 @@ export interface SmartPlayerDependencies {
 }
 
 export function createSmartPlayerMachine(deps: SmartPlayerDependencies) {
-  /** @xstate-layout N4IgpgJg5mDOIC5QGUC2BDATgFwAoBt0BPMTAOgEkJ8wBiKdVMM1AewDc4zMwBHAVzjZEoAA6tYAS2yTWAOxEgAHogCMAVgAcZTetW7VAFgAMATgBsmzQCYA7ABoQRRNeumyh0182Xzt24ZGAL5BjmhYeIQk5AAqABaScgDWiVC0SrDY6NjM6ABmOZgAFNgJyakAlLThOATEpGTxiSlyUIriUjLyiioIhubmZKoaqqZ65vqm1gDM5o7OCNPDZNaeFpoWxsPmxuYhYRi1UQ3I-FAwmakAshx0DEwst7Bk6ADGr2CiwkggHdKyCh+vWm02sQxmql8-V01lU8zU1kGS38qmM6lcxkM012+xANUi9XIp3OQmut3ojGYbE4zwgYFe+ESYHaEn+3SBiFsmLIxhm01sAyMxls01M8IQRnUOlUKJlGishgCIVCIDkrDp8B++Lq0Uo1GZPz+XUBoF6ASGAsMsKMpiMVrmThcWJ5xldxk003UlltItx2uOsTKLTahtZxp6iFm7lMmJMthjrgFYsdCFW0xdbo9Xo2MumfsOBN1xIuMlaN04LM6AIjCHMoo8-M85kCmkVnnFo3ca3Wm22OJV-sJlbZJuUiHUxgtzetnjtiPF6kMZGRIp8U2GelsyqCQA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QGUC2BDATgFwAoBt0BPMTAOgEkJ8wBiKdVMM1AewDc4zMwBHAVzjYA2gAYAuolAAHVrACW2eawB2UkAA9EARgCsADjIAWAGwBOAMz6z1s9qNGLAGhBFEAJm1myAdl0-9d1F9XRNrbR8LAF8olzQsPEIScgAVAAt5FQBrTKhaDVhsdGxmdAAzEswACmwM7NyASlp4nAJiUjJ0zJyVKDFJJBBZBSVVdS0EI30LMm1RPwt3M1F3dx9zIxc3BHdHMlEDg+nQ8MiYuIxWpI7kfigYQtyAWQ46BiYWV9gydABjX7A0hEEnUw0UyjUgwmRlCZBCCyWKzWGy2Om0hjmegs9hMom02lxJnOIBaiXa5Fu9yEz1e9EYzDYnG+EDAv3wmTA-VBcnBYyhiHM3nc1lEBjs+iMPiMZlRCHs2jIFkcPnRZlx+MJMViIBUrBZ8EGpLayUo1DA3JGEPGiCls3WRk89jsDncJlluxmhyOFhOdjO2qN11SdR6UAtvMhoAmFnMZGWDnmy1W6xlrg8ey9wR9YT90QDlzJJspDyUvRenHDo0jmgFRgVFhsjgb6Ml0tlXm8Bysfk8eIJoiJ+YSxtIlat-J2JjtJgd+Ol9gdbrTO28mN02NMfcJRi1USAA */
   return createMachine(
     {
       context: getInitialContext(),
@@ -44,15 +44,17 @@ export function createSmartPlayerMachine(deps: SmartPlayerDependencies) {
         Idle: {
           on: {
             "game.moves.request": {
-              actions: "saveGameState",
               target: "Thinking",
+              actions: "saveGameState",
             },
           },
         },
         Thinking: {
           after: {
             thinking: {
-              target: "SuggestingMove",
+              target: "#SmartPlayer.SuggestingMove",
+              actions: [],
+              internal: false,
             },
           },
         },
@@ -60,8 +62,8 @@ export function createSmartPlayerMachine(deps: SmartPlayerDependencies) {
           entry: ["calculateMove", "respondWithMove"],
           on: {
             "game.moves.accept": {
-              actions: "updatePrevFree",
               target: "Idle",
+              actions: "updatePrevFree",
             },
             "game.moves.decline": {
               target: "SuggestingMove",

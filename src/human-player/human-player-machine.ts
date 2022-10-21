@@ -23,7 +23,7 @@ export interface HumanPlayerDependencies {
 }
 
 export function createHumanPlayerMachine(deps: HumanPlayerDependencies) {
-  /** @xstate-layout N4IgpgJg5mDOIC5QAkCuBbAhgOwAoBtMBPMAJwDoBBAd0wEsAXO7KAJTAEdU4GBiKTOjDl0AewBuccqU7dYDRKAAOo2IzqjsikAA9EARgDsATnIAWY4YAcAZisAmewAYAbPuMuXAGhBFEhl1M3e2N9AFYrJ0Mw-TN7AF94nzQsPEISCgJiZihyADlNAGUwfDAAYwZIXgALDBxyBlEoKFKAfSwGMurtFTUmTW09BDDQ8hirMzMnezCbG319Kx8-BAWwp3JXM0MnG0NYo30XROS6tOIyciyiHPIAWQkwYtKKqtrU8lhUACN0Rh7VOoBkhdAYnFZDORjDYzBMbCEJtFDMsweCoS4YWEws4djY3CcQCkcNdLtdbg9JM9ypUIDUzg0mi0wO1MJ1uiDekCtCChmF9uQXDF7JNMXioiiEFZjPZyHiIlZbOFBYZDASiecMld0jleBBNMJ5KzhOqSZltSwAX0NNzQEN7HjzPbEdtovMnGYJfppi5yPZwjZpnEolZZmqzqaqLR1Cx2LAVNhYGB+IJhGJJLByJgymUwEoFBzAf0baCEABaDbC7FOBYuXHhKz6YUSqUy2su2FOWZmTxh1IRmj0JgxuDxxPJoQiR4ZiDlfDMMCWrmDMGQlyOSLuSydixhT3hDZbXH7MyHY5JQnh9JkOkfeSiJStARCRdF5cIKZjJzGaZhFzV6ZRMiviIH++hQtEnYLFKgTzIk57YKIM7wCCJpXhQA7Rmwsg8C+1pvlYAp7CMWLSm4KpmDYErWDY5ALCEJ7QoKHiqueqEXGa2QsPkRQlNSkC4cCtqICeYGwkY9h-rWUohp6ThyeimJYsEX5nqcfZoVqnG5BSTy8a8EACcWQzQq2gSOCeEnGNK9iybs5gYmYWK-o2Km9sSGlklxhQ-H8+bKIWeE8gYwoyvoeyWDYoRuF2EqWJC3aYjsxgjPirGXuxmk3BaBZWoJJZ2PFDaGBJrjWMYMnAQgASmHKxjdnF9iGJFbkapcGFDlhcaaImhlvjRRieIKyr2liuyyc4vr+lE5U2BETUtaavVBWWwq+o5zg1nWEQSoEkK1bssRNSqNhwfEQA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QAkCuBbAhgOwAoBtMBPMAJwDoBBAd0wEsAXO7KAJTAEdU4GBiKTOjDl0AewBuccqU7dYDANoAGALqJQAB1GxGdUdnUgAHogAsADgDs5JUoBMAVnPmAnHfcuHlgDQgiiADYARjtyczslANMQ2yCAyIBfBN80LDxCEgoCYmYocgA5fQBlMHwwAGMGSF4ACwwccgZRKCgygH0sBnKa5TUkEC0dJn1DEwQHAGYA8jsgoMtTYInzByCHX38EIKUF8gnTCYcXSxcXHccklPr04jJybKJc8gBZCTASssrqurTyWFQAEboRi9QyDXQjfpjELmaZxOzHE4BM6mDaIU5BcgOJwuUxKFzhVYBOyXECpHAPO4PJ6vSQfCpVCC1a6NZqtMAdTBdHqqMHaCEGKGBIKmGzmJR4qIhNYBcxohCw0V2FaONyyw5BFyk8k3TL3DI0t70r5Mn4NJotdqdboKIJ9TT84aC0BjYIOLESiaWZGedw+Pzo2V7OKWSYWRzw7XXSlZA0sXgQfTCeRc4Q6mP6nIsUH9cFO0aIEKmUKWSwTFyanZeUv+zZRCZhDwTebF8UTKNpDM0ehMFjsWBabCwMD8QTCMSSWDkTDlcpgDSKXm5x16Z3GRDelxYuylgIORaOHe1xAOWZhUzRKwBZv2SwdikZO7d3R9uCD4ejoQiN5TiAVfDMGAOYOkMq4FgguLuoe8T2M25gWPK17TJEyrKpYsTxAE966mQzK-PIogaG0AhCMBAwrpCLroisYRBFMdjFosExKBM8oTHY0y4uYywBAEliahM+xJMkIDYKIf7wP06aPhQz69mwsg8HyoGUeu4y2OQ0S8asxYeF48rYuYjYrMS17bDu2EZtSLAFMUpQMpAykCuBixKpY7jmNs6G2MxrEBhBFZYjieIEhGxKWTJmaPDZtLvPZJpOfmQpbHM1gcaYFbImWXpyv5GJBa4IWEpGInSbcsZZnkRSAsCDCJWByUivuYT7vBkyngiLHyi4fE2MF+LFeFpXRpF1lQPVqljFpMzucqXm2CxXX+e5aUrMxdhesxwTmBF5VULQL4KQO+jDhNa7QkoVjkD1ZbItibjbH5mwOLxWKlixyymCtlg7cNnYyWd4FTEZO4efNPlLZsByhPB0QYp5B4OMJCRAA */
   return createMachine(
     {
       context: getInitialContext(),
@@ -45,8 +45,8 @@ export function createHumanPlayerMachine(deps: HumanPlayerDependencies) {
           tags: "waiting",
           on: {
             "game.moves.request": {
-              actions: "saveGameState",
               target: "Playing",
+              actions: "saveGameState",
             },
           },
         },
@@ -57,9 +57,9 @@ export function createHumanPlayerMachine(deps: HumanPlayerDependencies) {
             NonSelected: {
               on: {
                 "human.toggle_match": {
-                  actions: "updateMove",
-                  cond: "validPositionAndMoveNotFull",
                   target: "MoveSelected",
+                  cond: "validPositionAndMoveNotFull",
+                  actions: "updateMove",
                 },
               },
             },
@@ -70,14 +70,14 @@ export function createHumanPlayerMachine(deps: HumanPlayerDependencies) {
                 },
                 "human.toggle_match": [
                   {
-                    actions: "clearMove",
-                    cond: "willEmptyMove",
                     target: "NonSelected",
+                    cond: "willEmptyMove",
+                    actions: "clearMove",
                   },
                   {
-                    actions: "updateMove",
-                    cond: "validPositionAndMoveNotFull",
                     target: "MoveSelected",
+                    cond: "validPositionAndMoveNotFull",
+                    actions: "updateMove",
                     internal: false,
                   },
                 ],
@@ -96,8 +96,8 @@ export function createHumanPlayerMachine(deps: HumanPlayerDependencies) {
           tags: "waiting",
           on: {
             "game.moves.accept": {
-              actions: ["saveGameState", "clearMove"],
               target: "AwaitingRequest",
+              actions: ["saveGameState", "clearMove"],
             },
             "game.moves.decline": {
               target: "Playing",
