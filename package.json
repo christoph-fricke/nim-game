@@ -20,7 +20,7 @@
     "test:watch": "jest --watch",
     "playwright": "playwright test",
     "playwright:headed": "playwright test --headed",
-    "playwright:debug": "PWDEBUG=1 playwright test --workers=1"
+    "playwright:debug": "playwright test --debug"
   },
   "lint-staged": {
     "*": [
